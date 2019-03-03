@@ -4,7 +4,14 @@ import lombok.Getter;
 
 @Getter
 public enum ResultEnum {
-
+    CATEGORY_EXIST(1,"此类目已存在"),
+    CATEGORY_NOT_EXIST(2,"类目不存在"),
+    PRODUCT_EXIST(3,"该商品已存在" ),
+    PRODUCT_NOT_EXIST(4,"此商品不存在"),
+    NOT_FOUND(404, "url错误,请求路径未找到"),
+    REQUEST_METHOD_ERROR(550, "不支持%s的请求方式"),
+    SERVER_ERROR(500, "服务器未知错误:%s"),
+    BIND_ERROR(511, "参数校验错误:%s"),
     ;
 
     private Integer code;
