@@ -35,4 +35,8 @@
     select id, category_name, category_type, create_time, update_time
     from product_category
   </select>
+  <select id="selectByCategoryName" resultMap="BaseResultMap">
+    select * from product_category
+    where category_name = #{categoryName}
+  </select>
 </mapper>
