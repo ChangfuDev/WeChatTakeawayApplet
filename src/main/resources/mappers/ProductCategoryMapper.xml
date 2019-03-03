@@ -35,38 +35,4 @@
     select id, category_name, category_type, create_time, update_time
     from product_category
   </select>
-  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.domain.ProductCategory">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
-    <result column="category_type" jdbcType="INTEGER" property="categoryType" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from product_category
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.domain.ProductCategory">
-    insert into product_category (id, category_name, category_type, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryType,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.domain.ProductCategory">
-    update product_category
-    set category_name = #{categoryName,jdbcType=VARCHAR},
-      category_type = #{categoryType,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, category_name, category_type, create_time, update_time
-    from product_category
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, category_name, category_type, create_time, update_time
-    from product_category
-  </select>
 </mapper>
