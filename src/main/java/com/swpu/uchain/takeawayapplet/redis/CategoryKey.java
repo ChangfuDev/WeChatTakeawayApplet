@@ -11,8 +11,8 @@ public class CategoryKey extends BasePrefix {
         super(prefix);
     }
 
-    public CategoryKey(int experiSeconds, String prefix) {
-        super(experiSeconds, prefix);
+    public CategoryKey(int expireSeconds, String prefix) {
+        super(expireSeconds, prefix);
     }
 
     public static CategoryKey categoryKey = new CategoryKey(350, "categoryType");

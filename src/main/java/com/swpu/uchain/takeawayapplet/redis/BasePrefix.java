@@ -7,21 +7,21 @@ package com.swpu.uchain.takeawayapplet.redis;
  **/
 public abstract class BasePrefix implements KeyPrefix {
 
-    private int experiSeconds;
+    private int expireSeconds;
     private String prefix;
 
     public BasePrefix(String prefix) {
         this(0, prefix);
     }
 
-    public BasePrefix(int experiSeconds, String prefix) {
-        this.experiSeconds = experiSeconds;
+    public BasePrefix(int expireSeconds, String prefix) {
+        this.expireSeconds = expireSeconds;
         this.prefix = prefix;
     }
 
     @Override
     public int expireSeconds() {
-        return this.experiSeconds;
+        return this.expireSeconds;
     }
 
     @Override
