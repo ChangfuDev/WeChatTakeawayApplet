@@ -13,4 +13,6 @@ public interface ProductCategoryMapper {
     List<ProductCategory> selectAll();
 
     int updateByPrimaryKey(ProductCategory record);
+
+    ProductCategory selectByCategoryName(String categoryName);
 }
