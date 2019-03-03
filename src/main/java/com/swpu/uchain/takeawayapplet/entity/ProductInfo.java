@@ -3,7 +3,7 @@ package com.swpu.uchain.takeawayapplet.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class productInfo implements Serializable {
+public class ProductInfo implements Serializable {
     private Long id;
 
     private String productName;
