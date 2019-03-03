@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swpu.uchain.takeawayapplet.dao.productInfoMapper">
-  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.ProductInfo">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="product_name" jdbcType="VARCHAR" property="productName" />
-    <result column="category_type" jdbcType="INTEGER" property="categoryType" />
-    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
-    <result column="product_description" jdbcType="VARCHAR" property="productDescription" />
-    <result column="creat_time" jdbcType="VARCHAR" property="creatTime" />
-    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
-    <result column="product_icon" jdbcType="LONGVARCHAR" property="productIcon" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+<mapper namespace="com.swpu.uchain.takeawayapplet.dao.ProductInfoMapper">
+    <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.ProductInfo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="product_name" jdbcType="VARCHAR" property="productName" />
+        <result column="category_type" jdbcType="INTEGER" property="categoryType" />
+        <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+        <result column="product_description" jdbcType="VARCHAR" property="productDescription" />
+        <result column="creat_time" jdbcType="VARCHAR" property="creatTime" />
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+        <result column="product_icon" jdbcType="LONGVARCHAR" property="productIcon" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from product_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.ProductInfo">
+    <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.ProductInfo">
     insert into product_info (id, product_name, category_type, 
       product_price, product_description, creat_time, 
       update_time, product_icon)
@@ -23,7 +23,7 @@
       #{productPrice,jdbcType=DECIMAL}, #{productDescription,jdbcType=VARCHAR}, #{creatTime,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=VARCHAR}, #{productIcon,jdbcType=LONGVARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.ProductInfo">
+    <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.ProductInfo">
     update product_info
     set product_name = #{productName,jdbcType=VARCHAR},
       category_type = #{categoryType,jdbcType=INTEGER},
@@ -34,15 +34,29 @@
       product_icon = #{productIcon,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, product_name, category_type, product_price, product_description, creat_time, 
     update_time, product_icon
     from product_info
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, product_name, category_type, product_price, product_description, creat_time, 
+    <select id="selectAll" resultMap="BaseResultMap">
+     select id, product_name, category_type, product_price, product_description, creat_time,
     update_time, product_icon
     from product_info
+  </select>
+
+    <select id="selectByProductName" resultMap="BaseResultMap">
+     select id, product_name, category_type, product_price, product_description, creat_time,
+    update_time, product_icon
+    from product_info
+    where product_name=#{productName}
+  </select>
+
+    <select id="selectProductByCategoryType" resultMap="BaseResultMap">
+    select id, product_name, category_type, product_price, product_description, creat_time,
+    update_time, product_icon
+    from product_info
+    where category_type=#{categoryType}
   </select>
 </mapper>
