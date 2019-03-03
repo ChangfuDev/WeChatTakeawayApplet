@@ -2,6 +2,7 @@ package com.swpu.uchain.takeawayapplet.redis;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -84,6 +85,28 @@ public class RedisService {
                 jedis.setex(realKey, seconds, str);
             }
             return true;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
+     * 获取对象数组的缓存
+     *
+     * @param prefix
+     * @param key
+     * @param clazz
+     * @return
+     */
+    public <T> List<T> getArraylist(KeyPrefix prefix, String key, Class<T> clazz) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            //生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            String str = jedis.get(realKey);
+            List<T> list = JSONObject.parseArray(str, clazz);
+            return list;
         } finally {
             returnToPool(jedis);
         }
