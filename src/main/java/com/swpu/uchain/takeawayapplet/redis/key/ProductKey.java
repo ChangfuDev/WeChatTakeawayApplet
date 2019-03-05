@@ -1,6 +1,4 @@
-package com.swpu.uchain.takeawayapplet.redis;
-
-import java.util.Locale;
+package com.swpu.uchain.takeawayapplet.redis.key;
 
 /**
  * @Description

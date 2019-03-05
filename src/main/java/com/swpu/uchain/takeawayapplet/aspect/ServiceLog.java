@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @ClassName ServiceLog
- * @Description TODO
  * @Author hobo
  * @Date 19-1-5 下午7:33
  **/

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @ClassName ControllerLog
- * @Description TODO
  * @Author hobo
  * @Date 19-1-5 下午7:34
  **/

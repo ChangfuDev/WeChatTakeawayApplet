@@ -8,6 +8,8 @@ public class OrderDetail implements Serializable {
 
     private Long orderId;
 
+    private Long detailId;
+
     private Long productId;
 
     private String productName;
@@ -38,6 +40,14 @@ public class OrderDetail implements Serializable {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public Long getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(Long detailId) {
+        this.detailId = detailId;
     }
 
     public Long getProductId() {
@@ -104,6 +114,7 @@ public class OrderDetail implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", orderId=").append(orderId);
+        sb.append(", detailId=").append(detailId);
         sb.append(", productId=").append(productId);
         sb.append(", productName=").append(productName);
         sb.append(", productPrice=").append(productPrice);

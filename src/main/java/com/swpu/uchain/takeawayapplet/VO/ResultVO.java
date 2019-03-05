@@ -4,7 +4,6 @@ import lombok.Data;
 
 /**
  * @ClassName ResultVO
- * @Description TODO
  * @Author hobo
  * @Date 19-1-5 下午1:37
  **/

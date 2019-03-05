@@ -1,4 +1,4 @@
-package com.swpu.uchain.takeawayapplet.redis;
+package com.swpu.uchain.takeawayapplet.redis.key;
 
 /**
  * @ClassName CategoryKey

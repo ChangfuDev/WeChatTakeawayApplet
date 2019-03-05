@@ -1,6 +1,7 @@
 package com.swpu.uchain.takeawayapplet.dao;
 
 import com.swpu.uchain.takeawayapplet.entity.OrderMaster;
+
 import java.util.List;
 
 public interface OrderMasterMapper {
@@ -13,4 +14,6 @@ public interface OrderMasterMapper {
     List<OrderMaster> selectAll();
 
     int updateByPrimaryKey(OrderMaster record);
+
+    List<OrderMaster> findListByOpenId(String openId);
 }

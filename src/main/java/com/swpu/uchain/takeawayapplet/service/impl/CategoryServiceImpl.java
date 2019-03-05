@@ -4,7 +4,7 @@ import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.dao.ProductCategoryMapper;
 import com.swpu.uchain.takeawayapplet.entity.ProductCategory;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
-import com.swpu.uchain.takeawayapplet.redis.CategoryKey;
+import com.swpu.uchain.takeawayapplet.redis.key.CategoryKey;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.service.CategoryService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;

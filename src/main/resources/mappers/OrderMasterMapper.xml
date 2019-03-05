@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.swpu.uchain.takeawayapplet.dao.OrderMasterMapper" >
-  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.OrderMaster" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
-    <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
-    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
-    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
-    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
-    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
-    <result column="open_id" property="openId" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+<mapper namespace="com.swpu.uchain.takeawayapplet.dao.OrderMasterMapper">
+    <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.OrderMaster">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="user_address" property="userAddress" jdbcType="VARCHAR"/>
+        <result column="order_amount" property="orderAmount" jdbcType="DECIMAL"/>
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER"/>
+        <result column="pay_status" property="payStatus" jdbcType="INTEGER"/>
+        <result column="creat_time" property="creatTime" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="open_id" property="openId" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from order_master
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.OrderMaster" >
+    <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.OrderMaster">
     insert into order_master (id, user_name, user_phone, 
       user_address, order_amount, order_status, 
       pay_status, creat_time, update_time, 
@@ -27,7 +27,7 @@
       #{payStatus,jdbcType=INTEGER}, #{creatTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
       #{openId,jdbcType=LONGVARCHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.OrderMaster" >
+    <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.OrderMaster">
     update order_master
     set user_name = #{userName,jdbcType=VARCHAR},
       user_phone = #{userPhone,jdbcType=VARCHAR},
@@ -40,15 +40,21 @@
       open_id = #{openId,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
     select id, user_name, user_phone, user_address, order_amount, order_status, pay_status, 
     creat_time, update_time, open_id
     from order_master
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, user_name, user_phone, user_address, order_amount, order_status, pay_status, 
     creat_time, update_time, open_id
     from order_master
+  </select>
+    <select id="findListByOpenId" resultMap="BaseResultMap">
+    select  id, user_name, user_phone, user_address, order_amount, order_status, pay_status,
+    creat_time, update_time, open_id
+    from order_master
+    where open_id=#{openId}
   </select>
 </mapper>

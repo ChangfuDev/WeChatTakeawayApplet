@@ -6,11 +6,9 @@ import java.math.BigDecimal;
 public class OrderMaster implements Serializable {
     private Long id;
 
-    private Long openId;
-
     private String userName;
 
-    private Integer userPhone;
+    private String userPhone;
 
     private String userAddress;
 
@@ -24,6 +22,8 @@ public class OrderMaster implements Serializable {
 
     private String updateTime;
 
+    private String openId;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -34,14 +34,6 @@ public class OrderMaster implements Serializable {
         this.id = id;
     }
 
-    public Long getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(Long openId) {
-        this.openId = openId;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -50,12 +42,12 @@ public class OrderMaster implements Serializable {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public Integer getUserPhone() {
+    public String getUserPhone() {
         return userPhone;
     }
 
-    public void setUserPhone(Integer userPhone) {
-        this.userPhone = userPhone;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone == null ? null : userPhone.trim();
     }
 
     public String getUserAddress() {
@@ -106,6 +98,14 @@ public class OrderMaster implements Serializable {
         this.updateTime = updateTime == null ? null : updateTime.trim();
     }
 
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -113,7 +113,6 @@ public class OrderMaster implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", openId=").append(openId);
         sb.append(", userName=").append(userName);
         sb.append(", userPhone=").append(userPhone);
         sb.append(", userAddress=").append(userAddress);
@@ -122,6 +121,7 @@ public class OrderMaster implements Serializable {
         sb.append(", payStatus=").append(payStatus);
         sb.append(", creatTime=").append(creatTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", openId=").append(openId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

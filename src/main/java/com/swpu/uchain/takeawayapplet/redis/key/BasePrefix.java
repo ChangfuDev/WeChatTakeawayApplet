@@ -1,4 +1,6 @@
-package com.swpu.uchain.takeawayapplet.redis;
+package com.swpu.uchain.takeawayapplet.redis.key;
+
+import com.swpu.uchain.takeawayapplet.redis.KeyPrefix;
 
 /**
  * @Description 实现缓存前缀

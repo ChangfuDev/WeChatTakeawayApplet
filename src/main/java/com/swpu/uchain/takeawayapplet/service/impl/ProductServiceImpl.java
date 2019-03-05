@@ -4,11 +4,12 @@ import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.dao.ProductInfoMapper;
 import com.swpu.uchain.takeawayapplet.entity.ProductInfo;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
-import com.swpu.uchain.takeawayapplet.redis.ProductKey;
+import com.swpu.uchain.takeawayapplet.redis.key.ProductKey;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.service.ProductService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @Date 19-3-3 下午4:53
  * @Description
  **/
+@Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
