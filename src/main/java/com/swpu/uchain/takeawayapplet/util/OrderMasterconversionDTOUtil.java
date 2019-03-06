@@ -21,6 +21,12 @@ public class OrderMasterconversionDTOUtil {
         return orderDTO;
     }
 
+    public static OrderMaster conerrt(OrderDTO orderDTO) {
+        OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO, orderMaster);
+        return orderMaster;
+    }
+
     public static List<OrderDTO> convert(List<OrderMaster> orderMasterList) {
         return orderMasterList.stream().map(e ->
                 convert(e)

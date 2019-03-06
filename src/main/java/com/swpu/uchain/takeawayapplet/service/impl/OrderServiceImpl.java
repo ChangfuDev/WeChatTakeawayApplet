@@ -90,6 +90,15 @@ public class OrderServiceImpl implements OrderService {
         return orderDetails;
     }
 
+    @Override
+    public OrderDTO findOrder(Long orderId) {
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(orderId);
+        List<OrderDetail> orderDetails = orderDetailMapper.selectByOrderId(orderId);
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(orderMaster, orderDTO);
+        return orderDTO;
+    }
+
 
     @Override
     public ResultVO findOrderByOrderId(Long orderId) {
@@ -165,39 +174,62 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResultVO cancelOrder(OrderDTO orderDTO) {
-        OrderMaster orderMaster = new OrderMaster();
 
         //判断订单状态 (只有完成完成状态下的订单才能取消)
-        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
+        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.FINISHED.getCode())) {
             log.error("【取消订单】 此订单状态状态不正确,id={},orderStatus={}", orderDTO.getId(), orderDTO.getOrderStatus());
             return ResultUtil.error(ResultEnum.ORDER_STATUS_ERROR);
         }
 
         //修改订单状态
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
-        BeanUtils.copyProperties(orderDTO, orderMaster);
-        orderMasterMapper.updateByPrimaryKey(orderMaster);
-        if (!update(orderMaster)) {
-            return ResultUtil.error(ResultEnum.ORDER_CANCLE_FILED);
-        }
-        //如果已经支付 需要退款
-        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
-            //TODO 退款
+        OrderMaster orderMaster = OrderMasterconversionDTOUtil.conerrt(orderDTO);
+        if (update(orderMaster)) {
+            return ResultUtil.success(orderDTO);
         }
 
-        //TODO 取消订单
-        return null;
+        return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
 
     @Override
     public ResultVO finishOrder(OrderDTO orderDTO) {
-        //TODO 完成订单
-        return null;
+
+        //判断订单状态
+        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
+            log.info("【完结订单】修改订单状态失败 orderId={},orderStatus={}", orderDTO.getId(), orderDTO.getOrderStatus());
+            return ResultUtil.error(ResultEnum.ORDER_STATUS_ERROR);
+        }
+
+        //修改订单状态
+        orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
+        //TODO 退款
+        OrderMaster orderMaster = OrderMasterconversionDTOUtil.conerrt(orderDTO);
+        if (update(orderMaster)) {
+            return ResultUtil.success(orderMaster);
+        }
+
+        return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
 
     @Override
     public ResultVO paidOrder(OrderDTO orderDTO) {
+        //判断订单状态
+        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
+            log.info("【支付订单】修改订单状态失败 orderId={},orderStatus={}", orderDTO.getId(), orderDTO.getOrderStatus());
+            return ResultUtil.error(ResultEnum.ORDER_STATUS_ERROR);
+        }
+        //判断支付状态
+        if (!orderDTO.getPayStatus().equals(PayStatusEnum.WAIT.getCode())) {
+            log.info("【支付订单】修改订单状态失败  orderId={},payStatus={}", orderDTO.getId(), orderDTO.getPayStatus());
+            return ResultUtil.error(ResultEnum.PAY_STATUS_ERROR);
+        }
+        //修改支付状态
+        orderDTO.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         //TODO 支付订单
-        return null;
+        OrderMaster orderMaster = OrderMasterconversionDTOUtil.conerrt(orderDTO);
+        if (update(orderMaster)) {
+            return ResultUtil.success(orderDTO);
+        }
+        return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
 }

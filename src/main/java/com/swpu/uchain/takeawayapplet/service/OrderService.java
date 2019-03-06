@@ -18,6 +18,8 @@ public interface OrderService {
 
     List<OrderDetail> selectDetailByOrderId(Long orderId);
 
+    OrderDTO findOrder(Long orderId);
+
     ResultVO findOrderByOrderId(Long orderId);
 
     ResultVO findListByOpenId(String openId);
