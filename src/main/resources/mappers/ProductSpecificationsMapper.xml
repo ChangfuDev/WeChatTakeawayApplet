@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swpu.uchain.takeawayapplet.dao.ProductSpecificationsMapper" >
+  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.ProductSpecifications" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="specifications_type" property="specificationsType" jdbcType="INTEGER" />
+    <result column="specifications_name" property="specificationsName" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_specifications
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.ProductSpecifications" >
+    insert into product_specifications (id, specifications_type, specifications_name, 
+      creat_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{specificationsType,jdbcType=INTEGER}, #{specificationsName,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.ProductSpecifications" >
+    update product_specifications
+    set specifications_type = #{specificationsType,jdbcType=INTEGER},
+      specifications_name = #{specificationsName,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, specifications_type, specifications_name, creat_time, update_time
+    from product_specifications
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, specifications_type, specifications_name, creat_time, update_time
+    from product_specifications
+  </select>
+</mapper>
