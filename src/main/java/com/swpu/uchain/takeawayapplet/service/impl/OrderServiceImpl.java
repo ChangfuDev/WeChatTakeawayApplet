@@ -14,7 +14,7 @@ import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.redis.key.OrderKey;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
-import com.swpu.uchain.takeawayapplet.util.OrderMasterconversionDTOUtil;
+import com.swpu.uchain.takeawayapplet.util.OrderMasterConversionDTOUtil;
 import com.swpu.uchain.takeawayapplet.util.RandomUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import com.swpu.uchain.takeawayapplet.util.TimeUtil;
@@ -96,6 +96,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = orderDetailMapper.selectByOrderId(orderId);
         OrderDTO orderDTO = new OrderDTO();
         BeanUtils.copyProperties(orderMaster, orderDTO);
+        orderDTO.setOrderDetails(orderDetails);
         return orderDTO;
     }
 
@@ -125,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
             }
             redisService.set(OrderKey.orderKerByOpenId, openId, orderMasters);
         }
-        List<OrderDTO> orderDTOList = OrderMasterconversionDTOUtil.convert(orderMasters);
+        List<OrderDTO> orderDTOList = OrderMasterConversionDTOUtil.convert(orderMasters);
         return ResultUtil.success(orderDTOList);
     }
 
@@ -159,14 +160,14 @@ public class OrderServiceImpl implements OrderService {
         }
         //写入订单数据库
         OrderMaster orderMaster = new OrderMaster();
-        BeanUtils.copyProperties(orderDTO, orderMaster);
 
         orderMaster.setId(orderId);
+        orderDTO.setId(orderId);
+        BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMaster.setCreatTime(creatTime);
-
         orderMasterMapper.insert(orderMaster);
         log.info("创建订单 orderMaster={}", orderMaster);
         return ResultUtil.success(orderDTO);
@@ -183,9 +184,9 @@ public class OrderServiceImpl implements OrderService {
 
         //修改订单状态
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
-        OrderMaster orderMaster = OrderMasterconversionDTOUtil.conerrt(orderDTO);
+        OrderMaster orderMaster = OrderMasterConversionDTOUtil.convert(orderDTO);
         if (update(orderMaster)) {
-            return ResultUtil.success(orderDTO);
+            return ResultUtil.success();
         }
 
         return ResultUtil.error(ResultEnum.SERVER_ERROR);
@@ -203,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
         //修改订单状态
         orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
         //TODO 退款
-        OrderMaster orderMaster = OrderMasterconversionDTOUtil.conerrt(orderDTO);
+        OrderMaster orderMaster = OrderMasterConversionDTOUtil.convert(orderDTO);
         if (update(orderMaster)) {
             return ResultUtil.success(orderMaster);
         }
@@ -226,7 +227,7 @@ public class OrderServiceImpl implements OrderService {
         //修改支付状态
         orderDTO.setPayStatus(PayStatusEnum.SUCCESS.getCode());
         //TODO 支付订单
-        OrderMaster orderMaster = OrderMasterconversionDTOUtil.conerrt(orderDTO);
+        OrderMaster orderMaster = OrderMasterConversionDTOUtil.convert(orderDTO);
         if (update(orderMaster)) {
             return ResultUtil.success(orderDTO);
         }
