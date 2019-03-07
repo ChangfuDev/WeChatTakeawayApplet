@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @ClassName OrderMasterconversionDTOUtil
+ * @ClassName OrderMasterConversionDTOUtil
  * @Author hobo
  * @Date 19-3-5 下午9:16
  * @Description 订单表转换为util工具
  **/
-public class OrderMasterconversionDTOUtil {
+public class OrderMasterConversionDTOUtil {
     public static OrderDTO convert(OrderMaster orderMaster) {
 
         OrderDTO orderDTO = new OrderDTO();
@@ -21,7 +21,7 @@ public class OrderMasterconversionDTOUtil {
         return orderDTO;
     }
 
-    public static OrderMaster conerrt(OrderDTO orderDTO) {
+    public static OrderMaster convert(OrderDTO orderDTO) {
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDTO, orderMaster);
         return orderMaster;
