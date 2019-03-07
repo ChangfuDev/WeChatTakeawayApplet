@@ -10,15 +10,17 @@ public class ProductInfo implements Serializable {
 
     private Integer categoryType;
 
+    private Integer specificationsType;
+
     private BigDecimal productPrice;
 
     private String productDescription;
 
-    private String creatTime;
-
     private String updateTime;
 
     private String productIcon;
+
+    private byte[] creatTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -46,6 +48,14 @@ public class ProductInfo implements Serializable {
         this.categoryType = categoryType;
     }
 
+    public Integer getSpecificationsType() {
+        return specificationsType;
+    }
+
+    public void setSpecificationsType(Integer specificationsType) {
+        this.specificationsType = specificationsType;
+    }
+
     public BigDecimal getProductPrice() {
         return productPrice;
     }
@@ -60,14 +70,6 @@ public class ProductInfo implements Serializable {
 
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription == null ? null : productDescription.trim();
-    }
-
-    public String getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(String creatTime) {
-        this.creatTime = creatTime == null ? null : creatTime.trim();
     }
 
     public String getUpdateTime() {
@@ -86,6 +88,14 @@ public class ProductInfo implements Serializable {
         this.productIcon = productIcon == null ? null : productIcon.trim();
     }
 
+    public byte[] getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(byte[] creatTime) {
+        this.creatTime = creatTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -95,11 +105,12 @@ public class ProductInfo implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", productName=").append(productName);
         sb.append(", categoryType=").append(categoryType);
+        sb.append(", specificationsType=").append(specificationsType);
         sb.append(", productPrice=").append(productPrice);
         sb.append(", productDescription=").append(productDescription);
-        sb.append(", creatTime=").append(creatTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", productIcon=").append(productIcon);
+        sb.append(", creatTime=").append(creatTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

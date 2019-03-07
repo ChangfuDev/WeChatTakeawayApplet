@@ -9,7 +9,7 @@ public class ProductCategory implements Serializable {
 
     private Integer categoryType;
 
-    private String createTime;
+    private String creatTime;
 
     private String updateTime;
 
@@ -39,12 +39,12 @@ public class ProductCategory implements Serializable {
         this.categoryType = categoryType;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getCreatTime() {
+        return creatTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
+    public void setCreatTime(String creatTime) {
+        this.creatTime = creatTime == null ? null : creatTime.trim();
     }
 
     public String getUpdateTime() {
@@ -64,7 +64,7 @@ public class ProductCategory implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", categoryName=").append(categoryName);
         sb.append(", categoryType=").append(categoryType);
-        sb.append(", createTime=").append(createTime);
+        sb.append(", creatTime=").append(creatTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

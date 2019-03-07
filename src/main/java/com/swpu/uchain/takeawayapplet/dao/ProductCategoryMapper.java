@@ -10,9 +10,9 @@ public interface ProductCategoryMapper {
 
     ProductCategory selectByPrimaryKey(Integer id);
 
+    ProductCategory selectByCategoryName(String categoryName);
+
     List<ProductCategory> selectAll();
 
     int updateByPrimaryKey(ProductCategory record);
-
-    ProductCategory selectByCategoryName(String categoryName);
 }

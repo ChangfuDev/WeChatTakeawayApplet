@@ -10,9 +10,9 @@ public interface OrderDetailMapper {
 
     OrderDetail selectByPrimaryKey(Long id);
 
+    List<OrderDetail> selectByOrderId(Long orderId);
+
     List<OrderDetail> selectAll();
 
     int updateByPrimaryKey(OrderDetail record);
-
-    List<OrderDetail> selectByOrderId(Long orderId);
 }

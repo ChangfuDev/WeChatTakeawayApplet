@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.swpu.uchain.takeawayapplet.dao.OrderMasterMapper">
     <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.OrderMaster">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
-        <result column="user_address" property="userAddress" jdbcType="VARCHAR"/>
-        <result column="order_amount" property="orderAmount" jdbcType="DECIMAL"/>
-        <result column="order_status" property="orderStatus" jdbcType="INTEGER"/>
-        <result column="pay_status" property="payStatus" jdbcType="INTEGER"/>
-        <result column="creat_time" property="creatTime" jdbcType="VARCHAR"/>
-        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
-        <result column="open_id" property="openId" jdbcType="LONGVARCHAR"/>
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+        <result column="user_address" jdbcType="VARCHAR" property="userAddress" />
+        <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
+        <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+        <result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+        <result column="creat_time" jdbcType="VARCHAR" property="creatTime" />
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+        <result column="open_id" jdbcType="LONGVARCHAR" property="openId" />
     </resultMap>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from order_master
@@ -40,7 +40,7 @@
       open_id = #{openId,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select id, user_name, user_phone, user_address, order_amount, order_status, pay_status, 
     creat_time, update_time, open_id
     from order_master

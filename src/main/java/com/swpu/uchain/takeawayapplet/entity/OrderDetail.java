@@ -10,6 +10,8 @@ public class OrderDetail implements Serializable {
 
     private Long detailId;
 
+    private Integer specificationsType;
+
     private Long productId;
 
     private String productName;
@@ -48,6 +50,14 @@ public class OrderDetail implements Serializable {
 
     public void setDetailId(Long detailId) {
         this.detailId = detailId;
+    }
+
+    public Integer getSpecificationsType() {
+        return specificationsType;
+    }
+
+    public void setSpecificationsType(Integer specificationsType) {
+        this.specificationsType = specificationsType;
     }
 
     public Long getProductId() {
@@ -115,6 +125,7 @@ public class OrderDetail implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", orderId=").append(orderId);
         sb.append(", detailId=").append(detailId);
+        sb.append(", specificationsType=").append(specificationsType);
         sb.append(", productId=").append(productId);
         sb.append(", productName=").append(productName);
         sb.append(", productPrice=").append(productPrice);

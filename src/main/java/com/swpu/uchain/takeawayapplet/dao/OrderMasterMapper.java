@@ -13,7 +13,7 @@ public interface OrderMasterMapper {
 
     List<OrderMaster> selectAll();
 
-    int updateByPrimaryKey(OrderMaster record);
-
     List<OrderMaster> findListByOpenId(String openId);
+
+    int updateByPrimaryKey(OrderMaster record);
 }
