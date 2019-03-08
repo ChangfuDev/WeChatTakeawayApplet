@@ -24,6 +24,11 @@ mybatis:
     map-underscore-to-camel-case: true
     use-generated-keys: true
 
+wechat:
+  mpAppId:
+  mpSecret:
+
+
 #redis
 redis:
   host: localhost
