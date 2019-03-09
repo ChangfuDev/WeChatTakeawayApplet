@@ -21,9 +21,9 @@ public class OrderFormConversionDTOUtil {
         Gson gson = new Gson();
         OrderDTO orderDTO = new OrderDTO();
 
-        orderDTO.setUserName(orderForm.getName());
-        orderDTO.setUserPhone(orderForm.getPhone());
-        orderDTO.setUserAddress(orderForm.getAddress());
+        orderDTO.setUserName(orderForm.getUserName());
+        orderDTO.setUserPhone(orderForm.getUserPhone());
+        orderDTO.setUserAddress(orderForm.getUserAddress());
         orderDTO.setOpenId(orderForm.getOpenId());
 
         List<OrderDetail> orderDetailList =

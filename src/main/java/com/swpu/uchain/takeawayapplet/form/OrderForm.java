@@ -17,15 +17,15 @@ public class OrderForm {
 
     @NotNull(message = "姓名必填")
     @ApiModelProperty("客户名")
-    private String name;
+    private String userName;
 
     @NotNull(message = "手机号必填")
     @ApiModelProperty("客户手机号码")
-    private String phone;
+    private String userPhone;
 
     @NotNull(message = "地址必填")
     @ApiModelProperty("客户地址")
-    private String address;
+    private String userAddress;
 
     @NotNull(message = "openId必填")
     @ApiModelProperty("微信openId")
