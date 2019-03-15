@@ -1,13 +1,10 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.alibaba.fastjson.JSONObject;
-import com.lly835.bestpay.rest.type.Get;
 import com.swpu.uchain.takeawayapplet.VO.WeChatVO;
 import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.util.AesCbcUtil;
-import com.swpu.uchain.takeawayapplet.util.JsonToClassUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +55,20 @@ public class WxController {
 
         String result = AesCbcUtil.decrypt(encryptedData,sessionKey,iv,"UTF-8");
         if (null!=result&&result.length()>0){
+            //TODO 将用户信息部分插入数据库 不返回给前端参数
             return ResultUtil.success(result);
 
         }
         return ResultUtil.error(ResultEnum.DECRYPTION_FAILURE);
     }
 
-    @GetMapping("token")
+    /**
+     * @Author hobo
+     * @Description : 可用于获取小程序的 token
+     * @Param
+     * @return void
+     **/
+    @GetMapping("/token")
     public void getAccessToken() {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + weChatProperties.getAppid() + "&secret=" + weChatProperties.getSecret();
         RestTemplate restTemplate = new RestTemplate();

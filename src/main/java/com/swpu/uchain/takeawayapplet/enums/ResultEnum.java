@@ -15,13 +15,14 @@ public enum ResultEnum {
     ITEMS_EMPTY(9, "购物车为空"),
 
     WECHAT_MP_ERROR(20, "微信公众账号错误"),
+    CODE_EMPTY(21, "code信息为空"),
     NOT_FOUND(404, "url错误,请求路径未找到"),
     REQUEST_METHOD_ERROR(550, "不支持%s的请求方式"),
     SERVER_ERROR(500, "服务器未知错误:%s"),
     BIND_ERROR(511, "参数校验错误:%s"),
-
-    ;
-
+    APPID_NOT_EXIST(20, "appid配置错误"),
+    USER_CHECK_FAILED(21, "用户信息校验失败"),
+    DECRYPTION_FAILURE(22, "用户信息解密失败");
 
 
     private Integer code;
