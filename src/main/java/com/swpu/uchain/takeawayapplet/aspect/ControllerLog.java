@@ -27,8 +27,12 @@ public class ControllerLog {
     public void before(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         String method = signature.getDeclaringTypeName() + "." + signature.getName();
-        log.info("-------------------------------------------------");
-        log.info("当前执行的controller的方法: " + method);
+        log.info("-----------------------------------------------------");
+        log.info("当前执行controller的方法:  " + method);
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            log.info("参数: " + arg);
+        }
     }
 
     @AfterReturning(pointcut = "controller()", returning = "ret")
@@ -38,6 +42,6 @@ public class ControllerLog {
             log.error(result.getMsg());
         }
         log.info("controller返回参数：" + result);
-        log.info("-------------------------------------------------");
+        log.info("-----------------------------------------------------");
     }
 }

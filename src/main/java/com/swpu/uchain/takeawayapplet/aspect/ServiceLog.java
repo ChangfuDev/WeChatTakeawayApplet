@@ -27,13 +27,18 @@ public class ServiceLog {
     public void before(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         String method = signature.getDeclaringTypeName() + "." + signature.getName();
-        log.info("-------------------------------------------------");
-        log.info("当前执行的service方法： " + method);
+        log.info("-----------------------------------------------------");
+        log.info("当前执行的service方法:" + method);
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            log.info("参数:" + arg);
+        }
     }
 
     @AfterReturning(pointcut = "service()", returning = "ret")
     public void after(Object ret) {
-        log.info("service返回参数" + ret);
-        log.info("-------------------------------------------------");
+        log.info("service返回参数:" + ret);
+        log.info("-----------------------------------------------------");
+
     }
 }
