@@ -11,6 +11,8 @@ import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
  **/
 public class ResultUtil {
 
+
+
     /**
      * @Author hobo
      * @Description :

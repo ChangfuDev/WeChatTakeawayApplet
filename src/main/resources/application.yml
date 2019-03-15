@@ -6,16 +6,16 @@ spring:
     url: jdbc:mysql://localhost:3306/takeaway_applet?useSSL=false&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-        # 初始化大小，最小，最大
-        initial-size: 5
-        min-idle: 5
-        max-active: 50
-        # 获取连接等待超时的时间
-        max-wait: 60000
-        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-        time-between-eviction-runs-millis: 60000
-        # 配置一个连接在池中最小生存的时间，单位是毫秒
-        min-evictable-idle-time-millis: 300000
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 50
+      # 获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
@@ -25,11 +25,19 @@ mybatis:
     use-generated-keys: true
 
 wechat:
-  mpAppId:
-  mpSecret:
-  mchId:
-  mchKey:
-  keyPath:
+  appid: wx08cbe6a7723b4059
+  secret: fbb7770b890b6108f75b7849795b70aa
+  token: #微信小程序消息服务器配置的token
+  aesKey: #微信小程序消息服务器配置的EncodingAESKey
+  msgDataFormat: JSON
+  mchId: 1483469312
+  mchKey: 06C56A89949D617xxxxxxxxxxx
+  keyPath: /var/weixin_cert/h5.p12
+
+projectUrl:
+  weChatMaAuthorize: https://wechatapptest.natapp1.cc
+  weChatOpenAuthorize: https://wechatapptest.natapp1.cc
+
 
 
 
