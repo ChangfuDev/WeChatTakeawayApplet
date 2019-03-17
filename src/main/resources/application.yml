@@ -26,7 +26,7 @@ mybatis:
 
 wechat:
   appid: wx08cbe6a7723b4059
-  secret: fbb7770b890b6108f75b7849795b70aa
+  secret: fbb7770b890b6108f75***********
   token: #微信小程序消息服务器配置的token
   aesKey: #微信小程序消息服务器配置的EncodingAESKey
   msgDataFormat: JSON
