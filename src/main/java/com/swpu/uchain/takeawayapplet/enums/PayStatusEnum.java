@@ -3,7 +3,7 @@ package com.swpu.uchain.takeawayapplet.enums;
 import lombok.Getter;
 
 @Getter
-public enum PayStatusEnum {
+public enum PayStatusEnum implements CodeEnum {
 
     WAIT(0, "等待支付"),
     SUCCESS(1, "支付成功"),

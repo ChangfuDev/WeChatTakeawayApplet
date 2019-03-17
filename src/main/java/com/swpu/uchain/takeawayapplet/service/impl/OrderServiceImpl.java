@@ -233,4 +233,11 @@ public class OrderServiceImpl implements OrderService {
         }
         return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
+
+    @Override
+    public ResultVO findAllList() {
+        List<OrderMaster> orderMasters = orderMasterMapper.selectAll();
+        List<OrderDTO> orderDTOList = OrderMasterConversionDTOUtil.convert(orderMasters);
+        return ResultUtil.success(orderDTOList);
+    }
 }

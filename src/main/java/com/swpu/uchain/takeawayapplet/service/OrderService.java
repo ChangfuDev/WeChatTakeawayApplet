@@ -31,4 +31,6 @@ public interface OrderService {
     ResultVO finishOrder(OrderDTO orderDTO);
 
     ResultVO paidOrder(OrderDTO orderDTO);
+
+    ResultVO findAllList();
 }

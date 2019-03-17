@@ -1,8 +1,11 @@
 package com.swpu.uchain.takeawayapplet.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swpu.uchain.takeawayapplet.entity.OrderDetail;
+import com.swpu.uchain.takeawayapplet.enums.OrderStatusEnum;
+import com.swpu.uchain.takeawayapplet.enums.PayStatusEnum;
+import com.swpu.uchain.takeawayapplet.util.EnumUtil;
 import lombok.Data;
-import redis.clients.jedis.BinaryClient;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -37,5 +40,15 @@ public class OrderDTO {
     private String updateTime;
 
     private List<OrderDetail> orderDetails;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum() {
+        return EnumUtil.getByCode(orderStatus, OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum() {
+        return EnumUtil.getByCode(payStatus, PayStatusEnum.class);
+    }
 
 }
