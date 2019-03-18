@@ -4,12 +4,17 @@ import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.dao.ProductInfoMapper;
 import com.swpu.uchain.takeawayapplet.entity.ProductInfo;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.form.ProductInfoForm;
 import com.swpu.uchain.takeawayapplet.redis.key.ProductKey;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.service.ProductService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
+import com.swpu.uchain.takeawayapplet.util.TimeUtil;
+import com.swpu.uchain.takeawayapplet.util.UploadIconUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +32,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private UploadIconUtil uploadIconUtil;
+
 
     @Override
     public boolean insert(ProductInfo productInfo) {
@@ -59,10 +68,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResultVO productInsert(ProductInfo productInfo) {
-        if (productInfoMapper.selectByProductName(productInfo.getProductName()) != null) {
+    public ResultVO productInsert(ProductInfoForm productInfoForm, MultipartFile file) {
+        if (productInfoMapper.selectByProductName(productInfoForm.getProductName()) != null) {
             return ResultUtil.error(ResultEnum.PRODUCT_EXIST);
         }
+
+        ProductInfo productInfo = new ProductInfo();
+        String iconPath = uploadIconUtil.getUploadFilePath(file);
+        productInfo.setProductIcon(iconPath);
+        TimeUtil timeUtil = new TimeUtil();
+        productInfo.setCreatTime(timeUtil.getNowTime());
+        BeanUtils.copyProperties(productInfoForm, productInfo);
+
         if (insert(productInfo)) {
             return ResultUtil.success(productInfo);
         }
@@ -74,6 +91,8 @@ public class ProductServiceImpl implements ProductService {
         if (productInfoMapper.selectByProductName(productInfo.getProductName()) == null) {
             return ResultUtil.error(ResultEnum.PRODUCT_NOT_EXIST);
         }
+        TimeUtil timeUtil = new TimeUtil();
+        productInfo.setUpdateTime(timeUtil.getNowTime());
         if (update(productInfo)) {
             return ResultUtil.success(productInfo);
         }

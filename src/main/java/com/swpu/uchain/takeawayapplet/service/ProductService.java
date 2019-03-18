@@ -2,6 +2,8 @@ package com.swpu.uchain.takeawayapplet.service;
 
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.entity.ProductInfo;
+import com.swpu.uchain.takeawayapplet.form.ProductInfoForm;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ public interface ProductService {
 
     ProductInfo selectByProductName(String productName);
 
-    ResultVO productInsert(ProductInfo productInfo);
+    ResultVO productInsert(ProductInfoForm productInfoForm, MultipartFile file);
 
     ResultVO productUpdate(ProductInfo productInfo);
 

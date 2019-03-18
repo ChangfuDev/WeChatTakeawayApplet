@@ -20,7 +20,7 @@ public class ProductInfo implements Serializable {
 
     private String productIcon;
 
-    private byte[] creatTime;
+    private String creatTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -88,11 +88,11 @@ public class ProductInfo implements Serializable {
         this.productIcon = productIcon == null ? null : productIcon.trim();
     }
 
-    public byte[] getCreatTime() {
+    public String getCreatTime() {
         return creatTime;
     }
 
-    public void setCreatTime(byte[] creatTime) {
+    public void setCreatTime(String creatTime) {
         this.creatTime = creatTime;
     }
 

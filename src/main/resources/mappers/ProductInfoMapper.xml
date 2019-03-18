@@ -10,7 +10,7 @@
     <result column="product_description" jdbcType="VARCHAR" property="productDescription" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
     <result column="product_icon" jdbcType="LONGVARCHAR" property="productIcon" />
-    <result column="creat_time" jdbcType="VARBINARY" property="creatTime" />
+    <result column="creat_time" jdbcType="VARCHAR" property="creatTime" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from product_info

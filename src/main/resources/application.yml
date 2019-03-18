@@ -24,6 +24,11 @@ mybatis:
     map-underscore-to-camel-case: true
     use-generated-keys: true
 
+file:
+  upload-dir: "/home/hobo/testFile"
+
+
+
 wechat:
   appid: wx08cbe6a7723b4059
   secret: fbb7770b890b6108f75***********
