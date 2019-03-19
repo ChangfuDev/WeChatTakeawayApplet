@@ -20,7 +20,7 @@ public interface CategoryService {
 
     ResultVO insertCategory(CategoryForm categoryForm);
 
-    ResultVO updateCategory(CategoryForm categoryForm);
+    ResultVO updateCategory(ProductCategory productCategory);
 
     ResultVO deleteCategory(Integer id);
 

@@ -1,5 +1,6 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
+import com.swpu.uchain.takeawayapplet.entity.ProductCategory;
 import com.swpu.uchain.takeawayapplet.form.CategoryForm;
 import com.swpu.uchain.takeawayapplet.service.CategoryService;
 import com.swpu.uchain.takeawayapplet.service.ProductService;
@@ -50,8 +51,8 @@ public class SellerCategoryController {
 
     @ApiOperation("修改类目")
     @PostMapping(value = "/update", name = "修改类目")
-    public Object update(CategoryForm categoryForm) {
-        return categoryService.updateCategory(categoryForm);
+    public Object update(ProductCategory productCategory) {
+        return categoryService.updateCategory(productCategory);
     }
 
     @ApiOperation("删除类目")

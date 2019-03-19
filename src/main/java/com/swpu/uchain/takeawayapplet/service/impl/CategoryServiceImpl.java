@@ -77,8 +77,10 @@ public class CategoryServiceImpl implements CategoryService {
             return ResultUtil.error(ResultEnum.CATEGORY_EXIST);
         }
         ProductCategory productCategory = new ProductCategory();
-
         BeanUtils.copyProperties(categoryForm, productCategory);
+        TimeUtil timeUtil = new TimeUtil();
+        productCategory.setCreatTime(timeUtil.getNowTime());
+
         if (insert(productCategory)) {
             return ResultUtil.success(productCategory);
         }
@@ -86,17 +88,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResultVO updateCategory(CategoryForm categoryForm) {
-        if (selectByCategoryName(categoryForm.getCategoryName()) == null) {
+    public ResultVO updateCategory(ProductCategory productCategory) {
+        if (productCategoryMapper.selectByPrimaryKey(productCategory.getId()) == null) {
             return ResultUtil.error(ResultEnum.CATEGORY_NOT_EXIST);
         }
-        ProductCategory productCategory = new ProductCategory();
-        BeanUtils.copyProperties(categoryForm,productCategory);
         TimeUtil timeUtil = new TimeUtil();
         productCategory.setUpdateTime(timeUtil.getNowTime());
-
         if (update(productCategory)) {
-            return ResultUtil.success(categoryForm);
+            return ResultUtil.success(productCategory);
         }
         return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
