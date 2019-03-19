@@ -118,8 +118,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductInfo> selectAll() {
-        return productInfoMapper.selectAll();
+    public ResultVO selectAll() {
+        return ResultUtil.success(productInfoMapper.selectAll());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.swpu.uchain.takeawayapplet.service;
 
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.entity.ProductCategory;
+import com.swpu.uchain.takeawayapplet.form.CategoryForm;
 
 import java.util.List;
 
@@ -15,11 +16,11 @@ public interface CategoryService {
 
     ProductCategory selectByCategoryName(String categoryName);
 
-    List<ProductCategory> findAll();
+    ResultVO findAll();
 
-    ResultVO insertCategory(ProductCategory productCategory);
+    ResultVO insertCategory(CategoryForm categoryForm);
 
-    ResultVO updateCategory(ProductCategory productCategory);
+    ResultVO updateCategory(CategoryForm categoryForm);
 
     ResultVO deleteCategory(Integer id);
 

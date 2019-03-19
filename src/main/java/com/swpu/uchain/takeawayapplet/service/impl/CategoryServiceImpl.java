@@ -3,11 +3,16 @@ package com.swpu.uchain.takeawayapplet.service.impl;
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.dao.ProductCategoryMapper;
 import com.swpu.uchain.takeawayapplet.entity.ProductCategory;
+import com.swpu.uchain.takeawayapplet.entity.ProductInfo;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.form.CategoryForm;
 import com.swpu.uchain.takeawayapplet.redis.key.CategoryKey;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.service.CategoryService;
+import com.swpu.uchain.takeawayapplet.service.ProductService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
+import com.swpu.uchain.takeawayapplet.util.TimeUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private ProductCategoryMapper productCategoryMapper;
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private RedisService redisService;
@@ -59,15 +67,18 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public List<ProductCategory> findAll() {
-        return productCategoryMapper.selectAll();
+    public ResultVO findAll() {
+        return ResultUtil.success(productCategoryMapper.selectAll());
     }
 
     @Override
-    public ResultVO insertCategory(ProductCategory productCategory) {
-        if (selectByCategoryName(productCategory.getCategoryName()) != null) {
+    public ResultVO insertCategory(CategoryForm categoryForm) {
+        if (selectByCategoryName(categoryForm.getCategoryName()) != null) {
             return ResultUtil.error(ResultEnum.CATEGORY_EXIST);
         }
+        ProductCategory productCategory = new ProductCategory();
+
+        BeanUtils.copyProperties(categoryForm, productCategory);
         if (insert(productCategory)) {
             return ResultUtil.success(productCategory);
         }
@@ -75,12 +86,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResultVO updateCategory(ProductCategory productCategory) {
-        if (selectByCategoryName(productCategory.getCategoryName()) == null) {
+    public ResultVO updateCategory(CategoryForm categoryForm) {
+        if (selectByCategoryName(categoryForm.getCategoryName()) == null) {
             return ResultUtil.error(ResultEnum.CATEGORY_NOT_EXIST);
         }
+        ProductCategory productCategory = new ProductCategory();
+        BeanUtils.copyProperties(categoryForm,productCategory);
+        TimeUtil timeUtil = new TimeUtil();
+        productCategory.setUpdateTime(timeUtil.getNowTime());
+
         if (update(productCategory)) {
-            return ResultUtil.success(productCategory);
+            return ResultUtil.success(categoryForm);
         }
         return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
@@ -89,6 +105,13 @@ public class CategoryServiceImpl implements CategoryService {
     public ResultVO deleteCategory(Integer id) {
         if (productCategoryMapper.selectByPrimaryKey(id) == null) {
             return ResultUtil.error(ResultEnum.CATEGORY_NOT_EXIST);
+        }
+
+        //判断类目下是否还有商品存在
+        ProductCategory productCategory = productCategoryMapper.selectByPrimaryKey(id);
+        List<ProductInfo> infos = productService.selectByCategoryType(productCategory.getCategoryType());
+        if (infos != null && infos.size() > 0) {
+            return ResultUtil.error(ResultEnum.PRODUCT_OF_CATEGORY_NOT_NULL);
         }
         if (delete(id)) {
             return ResultUtil.success();

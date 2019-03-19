@@ -28,7 +28,7 @@ file:
   upload-dir: "/home/hobo/testFile"
 
 
-
+#微信端配置
 wechat:
   appid: wx08cbe6a7723b4059
   secret: fbb7770b890b6108f75***********
@@ -39,6 +39,8 @@ wechat:
   mchKey: 06C56A89949D617xxxxxxxxxxx
   keyPath: /var/weixin_cert/h5.p12
   notifyUrl: http://wechatapptest.natapp1.cc/takeaway/pay/notify   #支付外网地址
+
+#外网地址
 projectUrl:
   weChatMaAuthorize: https://wechatapptest.natapp1.cc
   weChatOpenAuthorize: https://wechatapptest.natapp1.cc
