@@ -32,8 +32,6 @@ public class UploadIconUtil {
         }
         //设置图片上传路径
         String filePath = uploadIconConfig.getUploadDir();
-        System.out.println(filePath);
-
         //获取图片后缀名
         String suffix = file.getOriginalFilename();
         String prefix = suffix.substring(suffix.lastIndexOf(".") + 1);
@@ -51,7 +49,6 @@ public class UploadIconUtil {
         try {
             file.transferTo(dest);
             String fileNameNew = dest.getName();
-            System.out.println(fileNameNew);
             return fileNameNew;
         } catch (IOException e) {
             e.getMessage();

@@ -1,6 +1,7 @@
 package com.swpu.uchain.takeawayapplet.service.impl;
 
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
+import com.swpu.uchain.takeawayapplet.config.UploadIconConfig;
 import com.swpu.uchain.takeawayapplet.dao.ProductInfoMapper;
 import com.swpu.uchain.takeawayapplet.entity.ProductInfo;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
@@ -35,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private UploadIconUtil uploadIconUtil;
+
+    @Autowired
+    private UploadIconConfig uploadIconConfig;
 
 
     @Override
@@ -75,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
         ProductInfo productInfo = new ProductInfo();
         String iconPath = uploadIconUtil.getUploadFilePath(file);
-        productInfo.setProductIcon(iconPath);
+        productInfo.setProductIcon(uploadIconConfig.getUploadDir() + "/" + iconPath);
         TimeUtil timeUtil = new TimeUtil();
         productInfo.setCreatTime(timeUtil.getNowTime());
         BeanUtils.copyProperties(productInfoForm, productInfo);
