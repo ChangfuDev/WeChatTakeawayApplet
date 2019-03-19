@@ -24,7 +24,7 @@ public interface ProductService {
 
     ResultVO productDelete(Long id);
 
-    List<ProductInfo> selectAll();
+    ResultVO selectAll();
 
     List<ProductInfo> selectByCategoryType(Integer categoryType);
 }

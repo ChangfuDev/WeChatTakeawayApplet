@@ -2,6 +2,7 @@ package com.swpu.uchain.takeawayapplet.controller;
 
 import com.swpu.uchain.takeawayapplet.form.ProductInfoForm;
 import com.swpu.uchain.takeawayapplet.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
  * @ClassName SellerProductController
  * @Author hobo
  * @Date 19-3-18 下午6:47
- * @Description 卖家端商品
+ * @Description 商家商品接口
  **/
 
 @RestController
 @RequestMapping("/seller/product")
+@Api(tags = "商家商品接口")
 public class SellerProductController {
 
     @Autowired

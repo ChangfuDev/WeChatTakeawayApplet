@@ -4,6 +4,7 @@ import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @ClassName SellerOrderController
  * @Author hobo
  * @Date 19-3-17 下午2:46
- * @Description 商家接口
+ * @Description 商家订单接口
  **/
 @RestController
 @RequestMapping("/seller/order")
 @Slf4j
+@Api(tags = "商家订单接口")
 public class SellerOrderController {
 
     @Autowired

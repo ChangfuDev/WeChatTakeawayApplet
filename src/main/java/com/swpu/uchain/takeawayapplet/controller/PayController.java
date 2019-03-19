@@ -4,6 +4,7 @@ import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.exception.GlobalException;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  **/
 
 @Controller
+@Api(tags = "微信支付接口")
 public class PayController {
 
 

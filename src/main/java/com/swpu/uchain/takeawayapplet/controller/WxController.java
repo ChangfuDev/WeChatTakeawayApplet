@@ -6,6 +6,7 @@ import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.util.AesCbcUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/takeaway/user")
 @Slf4j
+@Api(tags = "微信端接口")
 public class WxController {
 
     @Autowired

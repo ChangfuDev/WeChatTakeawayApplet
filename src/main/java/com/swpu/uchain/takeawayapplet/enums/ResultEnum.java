@@ -13,6 +13,7 @@ public enum ResultEnum {
     ORDER_CANCEL_FILED(7, "订单取消失败"),
     PAY_STATUS_ERROR(8, "订单支付状态不正确"),
     ITEMS_EMPTY(9, "购物车为空"),
+    PRODUCT_OF_CATEGORY_NOT_NULL(10, "此类目下商品不为空"),
 
     WECHAT_MP_ERROR(20, "微信公众账号错误"),
     CODE_EMPTY(21, "code信息为空"),
@@ -22,7 +23,8 @@ public enum ResultEnum {
     BIND_ERROR(511, "参数校验错误:%s"),
     APPID_NOT_EXIST(20, "appid配置错误"),
     USER_CHECK_FAILED(21, "用户信息校验失败"),
-    DECRYPTION_FAILURE(22, "用户信息解密失败");
+    DECRYPTION_FAILURE(22, "用户信息解密失败"),
+    ;
 
 
     private Integer code;
