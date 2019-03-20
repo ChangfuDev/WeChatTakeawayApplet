@@ -1,42 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.swpu.uchain.takeawayapplet.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="role" jdbcType="INTEGER" property="role" />
-    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
-    <result column="open_id" jdbcType="LONGVARCHAR" property="openId" />
-    <result column="user_address" jdbcType="LONGVARCHAR" property="userAddress" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swpu.uchain.takeawayapplet.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.User">
-    insert into user (id, username, `role`, 
-      user_phone, open_id, user_address
+  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.User" >
+    insert into user (id, username, open_id
       )
-    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, 
-      #{userPhone,jdbcType=VARCHAR}, #{openId,jdbcType=LONGVARCHAR}, #{userAddress,jdbcType=LONGVARCHAR}
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{openId,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.User">
+  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.User" >
     update user
     set username = #{username,jdbcType=VARCHAR},
-      `role` = #{role,jdbcType=INTEGER},
-      user_phone = #{userPhone,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=LONGVARCHAR},
-      user_address = #{userAddress,jdbcType=LONGVARCHAR}
+      open_id = #{openId,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, username, `role`, user_phone, open_id, user_address
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, username, open_id
     from user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, username, `role`, user_phone, open_id, user_address
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, username, open_id
     from user
   </select>
 </mapper>
