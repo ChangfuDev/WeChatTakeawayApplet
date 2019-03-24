@@ -71,4 +71,14 @@ public class WeChatProperties {
      */
     private String notifyUrl;
 
+    /**
+     * 商品简单描述
+     */
+    private String title;
+
+    /**
+     * 支付类型 小程序为JSAPI
+     */
+    private String tradeType;
+
 }

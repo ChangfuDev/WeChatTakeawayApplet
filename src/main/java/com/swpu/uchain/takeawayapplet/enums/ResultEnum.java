@@ -20,6 +20,11 @@ public enum ResultEnum {
 
     LOGIN_FAIL(30, "登录失败，此用户不存在"),
     AUTHORIZE_FAIL(31, "权限认证不够"),
+    PAY_REQUEST_FAIL(40, "发起预支付请求失败"),
+    PAY_FILE(41, "支付失败"),
+    AMOUNT_ERROR(42, "金额不匹配"),
+    PARAMETER_NOT_MATCH(43,"回调参数不匹配" ),
+
     NOT_FOUND(404, "url错误,请求路径未找到"),
     REQUEST_METHOD_ERROR(550, "不支持%s的请求方式"),
     SERVER_ERROR(500, "服务器未知错误:%s"),
@@ -27,7 +32,7 @@ public enum ResultEnum {
     APPID_NOT_EXIST(20, "appid配置错误"),
     USER_CHECK_FAILED(21, "用户信息校验失败"),
     DECRYPTION_FAILURE(22, "用户信息解密失败"),
-    ;
+   ;
 
     private Integer code;
 

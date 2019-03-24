@@ -14,6 +14,7 @@ import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.redis.key.OrderKey;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
+import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.OrderMasterConversionDTOUtil;
 import com.swpu.uchain.takeawayapplet.util.RandomUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
@@ -50,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMasterMapper orderMasterMapper;
 
+    @Autowired
+    private PayService payService;
 
     @Override
     public boolean insert(OrderDetail orderDetail) {
@@ -160,7 +163,6 @@ public class OrderServiceImpl implements OrderService {
         }
         //写入订单数据库
         OrderMaster orderMaster = new OrderMaster();
-
         orderMaster.setId(orderId);
         orderDTO.setId(orderId);
         BeanUtils.copyProperties(orderDTO, orderMaster);
@@ -224,9 +226,7 @@ public class OrderServiceImpl implements OrderService {
             log.info("【支付订单】修改订单状态失败  orderId={},payStatus={}", orderDTO.getId(), orderDTO.getPayStatus());
             return ResultUtil.error(ResultEnum.PAY_STATUS_ERROR);
         }
-        //修改支付状态
         orderDTO.setPayStatus(PayStatusEnum.SUCCESS.getCode());
-        //TODO 支付订单
         OrderMaster orderMaster = OrderMasterConversionDTOUtil.convert(orderDTO);
         if (update(orderMaster)) {
             return ResultUtil.success(orderDTO);

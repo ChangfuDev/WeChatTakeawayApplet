@@ -31,19 +31,29 @@ file:
 #微信端配置
 wechat:
   appid: wx08cbe6a7723b4059
-  secret: fbb7770b890b6108f75***********
-  token: #微信小程序消息服务器配置的token
-  aesKey: #微信小程序消息服务器配置的EncodingAESKey
+  secret: 184d33fb3de278d49a1411cd111eeaa2
+
+  #微信通信模板配置
+  token:
+  aesKey:
   msgDataFormat: JSON
+
+  #微信开放平台(后台管理配置)
+  openAppId: #开放平台id
+  openAppSecret: #开放平台secret
+
+  #微信支付配置
   mchId: 1483469312
   mchKey: 06C56A89949D617xxxxxxxxxxx
-  keyPath: /var/weixin_cert/h5.p12
-  notifyUrl: http://wechatapptest.natapp1.cc/takeaway/pay/notify   #支付外网地址
+  notifyUrl: "https://api.weixin.qq.com/sns/jscode2session"
+  title: "xx外卖"
+  trade_type: "JSAPI"
 
 #外网地址
 projectUrl:
   weChatMaAuthorize: https://wechatapptest.natapp1.cc
   weChatOpenAuthorize: https://wechatapptest.natapp1.cc
+  pay_url: "https://api.mch.weixin.qq.com/pay/unifiedorder"
 
 
 
