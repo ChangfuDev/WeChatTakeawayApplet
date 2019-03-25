@@ -1,34 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.swpu.uchain.takeawayapplet.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.User" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="open_id" property="openId" jdbcType="LONGVARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swpu.uchain.takeawayapplet.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.swpu.uchain.takeawayapplet.entity.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role" jdbcType="INTEGER" property="role" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.User" >
-    insert into user (id, username, open_id
-      )
-    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{openId,jdbcType=LONGVARCHAR}
-      )
+  <insert id="insert" parameterType="com.swpu.uchain.takeawayapplet.entity.User">
+    insert into user (id, username, `password`, 
+      `role`)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{role,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.User" >
+  <update id="updateByPrimaryKey" parameterType="com.swpu.uchain.takeawayapplet.entity.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=LONGVARCHAR}
+      `password` = #{password,jdbcType=VARCHAR},
+      `role` = #{role,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, username, open_id
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, username, `password`, `role`
     from user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, username, open_id
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, username, `password`, `role`
     from user
   </select>
 </mapper>

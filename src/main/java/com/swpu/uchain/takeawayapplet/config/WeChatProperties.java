@@ -43,15 +43,6 @@ public class WeChatProperties {
     private String msgDataFormat;
 
     /**
-     * 开放平台id
-     */
-    private String openAppId;
-
-    /***
-     * 开放平台秘钥
-     */
-    private String openAppSecret;
-    /**
      * 商户号
      */
     private String mchId;

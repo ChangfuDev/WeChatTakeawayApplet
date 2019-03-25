@@ -4,23 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.swpu.uchain.takeawayapplet.VO.WeChatVO;
 import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
-import com.swpu.uchain.takeawayapplet.exception.GlobalException;
 import com.swpu.uchain.takeawayapplet.util.AesCbcUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,14 +29,10 @@ import java.util.Map;
 @RequestMapping("/takeaway/user")
 @Slf4j
 @Api(tags = "微信端接口")
-public class WxController {
+public class WeChatController {
 
     @Autowired
     private WeChatProperties weChatProperties;
-
-    @Autowired
-    private WxMpService wxOpenService;
-
 
     /**
      * @return java.lang.Object
@@ -88,36 +78,5 @@ public class WxController {
         System.out.println(response);
         log.info("response={}", response);
     }
-
-
-    @GetMapping(value = "/qrAuthorize")
-    public String qrAuthorize(String returnUrl) {
-        String url = "";
-        String redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QrConnectScope.SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
-        return "redirect:" + redirectUrl;
-    }
-
-    /***
-     * @Author hobo
-     * @Description : 微信扫码登录接口
-     * @Param [code, returnUrl]
-     * @return java.lang.String
-     **/
-    @ApiOperation("微信扫码登录接口")
-    @GetMapping(value = "/qrUserInfo", name = "微信扫码登录接口")
-    public String qrUserInfo(String code, String returnUrl) {
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
-        try {
-            wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
-        } catch (WxErrorException e) {
-            log.error("【微信网页授权】{}", e);
-            throw new GlobalException(ResultEnum.WECHAT_MP_ERROR);
-        }
-        log.info("wxMpOAuth2AccessToken={}", wxMpOAuth2AccessToken);
-        String openId = wxMpOAuth2AccessToken.getOpenId();
-
-        return "redirect:" + returnUrl + "?openid=" + openId;
-    }
-
 
 }

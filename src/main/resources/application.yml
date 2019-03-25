@@ -38,9 +38,6 @@ wechat:
   aesKey:
   msgDataFormat: JSON
 
-  #微信开放平台(后台管理配置)
-  openAppId: #开放平台id
-  openAppSecret: #开放平台secret
 
   #微信支付配置
   mchId: 1483469312

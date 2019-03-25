@@ -7,7 +7,9 @@ public class User implements Serializable {
 
     private String username;
 
-    private String openId;
+    private String password;
+
+    private Integer role;
 
     private static final long serialVersionUID = 1L;
 
@@ -27,12 +29,20 @@ public class User implements Serializable {
         this.username = username == null ? null : username.trim();
     }
 
-    public String getOpenId() {
-        return openId;
+    public String getPassword() {
+        return password;
     }
 
-    public void setOpenId(String openId) {
-        this.openId = openId == null ? null : openId.trim();
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     @Override
@@ -43,7 +53,8 @@ public class User implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", username=").append(username);
-        sb.append(", openId=").append(openId);
+        sb.append(", password=").append(password);
+        sb.append(", role=").append(role);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

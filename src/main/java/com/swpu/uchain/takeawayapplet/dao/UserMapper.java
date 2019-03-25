@@ -10,8 +10,6 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Long id);
 
-    User selectByopenId(String openId);
-
     List<User> selectAll();
 
     int updateByPrimaryKey(User record);
