@@ -1,7 +1,9 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
+import com.swpu.uchain.takeawayapplet.accessctro.RoleContro;
 import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.enums.RoleEnum;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date 19-3-17 下午2:46
  * @Description 商家订单接口
  **/
+
+@RoleContro(role = RoleEnum.ADMIN)
 @RestController
 @RequestMapping("/seller/order")
 @Slf4j

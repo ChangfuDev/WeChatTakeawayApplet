@@ -51,7 +51,6 @@ public class BuyerOrderController {
     @ApiOperation("获取订单详情")
     @GetMapping(value = "/getDetail", name = "获取订单详情信息")
     public Object getOrderDetail(String openId, Long orderId) {
-        //TODO 需要加入openId作为权限控制
         OrderDTO orderDTO = orderService.findOrder(orderId);
 
         return ResultUtil.success(orderDTO);
@@ -61,7 +60,6 @@ public class BuyerOrderController {
     @PostMapping(value = "/cancel", name = "取消订单")
     public Object cancel(String openId, Long orderId) {
 
-        //TODO 加入权限控制
         OrderDTO orderDTO = orderService.findOrder(orderId);
         return orderService.cancelOrder(orderDTO);
     }

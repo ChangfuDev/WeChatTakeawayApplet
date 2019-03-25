@@ -59,8 +59,8 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 //指定接口的位置
                 .apis(RequestHandlerSelectors.basePackage("com.swpu.uchain.takeawayapplet.controller"))
                 .paths(PathSelectors.any())
-                .build();
-//                .globalOperationParameters(pars);
+                .build()
+                .globalOperationParameters(pars);
     }
 
     private ApiInfo apiInfo() {

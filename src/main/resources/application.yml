@@ -24,6 +24,20 @@ mybatis:
     map-underscore-to-camel-case: true
     use-generated-keys: true
 
+
+#redis
+redis:
+  host: localhost
+  port: 6379
+  #超时时间
+  timeout: 10
+  #最大连接数
+  poolMaxTotal: 1000
+  #最大空闲连接数
+  poolMaxIdle: 500
+  #最大等待时间
+  poolMaxWait: 500
+
 file:
   upload-dir: "/home/hobo/testFile"
 
@@ -53,17 +67,10 @@ projectUrl:
   pay_url: "https://api.mch.weixin.qq.com/pay/unifiedorder"
 
 
+jwt:
+  secret: test
+  expiration: 1296000
+  tokenStart: "Bearer "
+  tokenName: Authorization
 
 
-#redis
-redis:
-  host: localhost
-  port: 6379
-  #超时时间
-  timeout: 10
-  #最大连接数
-  poolMaxTotal: 1000
-  #最大空闲连接数
-  poolMaxIdle: 500
-  #最大等待时间
-  poolMaxWait: 500

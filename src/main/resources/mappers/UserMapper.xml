@@ -33,4 +33,9 @@
     select id, username, `password`, `role`
     from user
   </select>
+  <select id="findUserByUserName" resultType="com.swpu.uchain.takeawayapplet.entity.User">
+     select id, username, `password`, `role`
+    from user
+    where username=#{username}
+  </select>
 </mapper>

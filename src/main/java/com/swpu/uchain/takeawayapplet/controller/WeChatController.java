@@ -26,7 +26,7 @@ import java.util.Map;
  **/
 
 @RestController
-@RequestMapping("/takeaway/user")
+@RequestMapping("/wechat/user")
 @Slf4j
 @Api(tags = "微信端接口")
 public class WeChatController {

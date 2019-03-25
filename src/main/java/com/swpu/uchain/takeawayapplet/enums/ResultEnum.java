@@ -25,12 +25,15 @@ public enum ResultEnum {
     AMOUNT_ERROR(42, "金额不匹配"),
     PARAMETER_NOT_MATCH(43,"回调参数不匹配" ),
 
+    AUTHENTICATION_ERROR(401,"用户认证失败,请重新登录" ),
+    PERMISSION_DENNY(403,"权限不足" ),
     NOT_FOUND(404, "url错误,请求路径未找到"),
     REQUEST_METHOD_ERROR(550, "不支持%s的请求方式"),
+
     SERVER_ERROR(500, "服务器未知错误:%s"),
     BIND_ERROR(511, "参数校验错误:%s"),
     APPID_NOT_EXIST(20, "appid配置错误"),
-    USER_CHECK_FAILED(21, "用户信息校验失败"),
+    USER_NOT_EXIST(21, "用户不存在"),
     DECRYPTION_FAILURE(22, "用户信息解密失败"),
    ;
 

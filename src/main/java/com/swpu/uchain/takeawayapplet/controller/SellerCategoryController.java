@@ -1,6 +1,8 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
+import com.swpu.uchain.takeawayapplet.accessctro.RoleContro;
 import com.swpu.uchain.takeawayapplet.entity.ProductCategory;
+import com.swpu.uchain.takeawayapplet.enums.RoleEnum;
 import com.swpu.uchain.takeawayapplet.form.CategoryForm;
 import com.swpu.uchain.takeawayapplet.service.CategoryService;
 import com.swpu.uchain.takeawayapplet.service.ProductService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description 商家类目接口
  **/
 
+@RoleContro(role = RoleEnum.ADMIN)
 @RestController
 @RequestMapping("/seller/category")
 @Api(tags = "商家类目接口")
