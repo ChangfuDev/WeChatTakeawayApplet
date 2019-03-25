@@ -1,6 +1,5 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
-import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.form.OrderForm;
@@ -8,7 +7,6 @@ import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.util.OrderFormConversionDTOUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -27,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/buyer/order")
 @Api(tags = "买家订单接口")
-public class OrderController {
+public class BuyerOrderController {
 
     @Autowired
     private OrderService orderService;

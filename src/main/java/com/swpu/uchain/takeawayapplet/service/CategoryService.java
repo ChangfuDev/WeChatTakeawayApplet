@@ -18,6 +18,8 @@ public interface CategoryService {
 
     ResultVO findAll();
 
+    List<ProductCategory> selectAll();
+
     ResultVO insertCategory(CategoryForm categoryForm);
 
     ResultVO updateCategory(ProductCategory productCategory);

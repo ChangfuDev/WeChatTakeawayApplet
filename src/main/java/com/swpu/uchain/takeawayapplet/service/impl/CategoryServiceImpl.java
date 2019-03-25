@@ -72,6 +72,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<ProductCategory> selectAll() {
+        return productCategoryMapper.selectAll();
+    }
+
+    @Override
     public ResultVO insertCategory(CategoryForm categoryForm) {
         if (selectByCategoryName(categoryForm.getCategoryName()) != null) {
             return ResultUtil.error(ResultEnum.CATEGORY_EXIST);
