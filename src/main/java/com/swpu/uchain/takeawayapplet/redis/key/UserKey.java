@@ -1,7 +1,5 @@
 package com.swpu.uchain.takeawayapplet.redis.key;
 
-import com.swpu.uchain.takeawayapplet.entity.User;
-
 /**
  * @ClassName UserKey
  * @Author hobo
@@ -13,5 +11,5 @@ public class UserKey extends BasePrefix {
         super(expireSeconds, prefix);
     }
 
-    public static UserKey userKey = new UserKey(400,"openId");
+    public static UserKey userKey = new UserKey(400,"username");
 }

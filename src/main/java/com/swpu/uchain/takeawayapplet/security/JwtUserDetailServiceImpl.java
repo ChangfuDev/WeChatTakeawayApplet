@@ -38,8 +38,7 @@ public class JwtUserDetailServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("用户名为 %s 的用户不存在", username));
         } else {
             String role = RoleEnum.getRole(user.getRole());
-            //passwordEncoder.encode 对接收password加密
-            return new JwtUser(username, passwordEncoder.encode(user.getPassword()), role);
+            return new JwtUser(username, user.getPassword(), role);
         }
     }
 }

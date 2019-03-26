@@ -20,6 +20,7 @@ public enum ResultEnum {
 
     LOGIN_FAIL(30, "登录失败，此用户不存在"),
     AUTHORIZE_FAIL(31, "权限认证不够"),
+    PASSWORD_ERROR(32,"用户密码错误" ),
     PAY_REQUEST_FAIL(40, "发起预支付请求失败"),
     PAY_FILE(41, "支付失败"),
     AMOUNT_ERROR(42, "金额不匹配"),
@@ -35,7 +36,7 @@ public enum ResultEnum {
     APPID_NOT_EXIST(20, "appid配置错误"),
     USER_NOT_EXIST(21, "用户不存在"),
     DECRYPTION_FAILURE(22, "用户信息解密失败"),
-   ;
+    USER_EXIST(23,"此用户名已被注册" ), ;
 
     private Integer code;
 
