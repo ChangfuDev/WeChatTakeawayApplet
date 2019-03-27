@@ -3,7 +3,9 @@ package com.swpu.uchain.takeawayapplet.service.impl;
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.config.UrlProperties;
 import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
+import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.exception.GlobalException;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
 import com.swpu.uchain.takeawayapplet.form.RefundForm;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
@@ -163,8 +165,13 @@ public class PayServiceImpl implements PayService {
 
         //从报文中获取值
         String returnCode = (String) map.get("return_code");
+        String outTradeNo = (String) map.get("out_trade_no");
         String totalFee = (String) map.get("total_fee");
-
+        Long orderId = Long.parseLong(outTradeNo);
+        OrderDTO orderDTO = orderService.findOrder(orderId);
+        if (!(orderDTO.getOrderAmount() + "").equals(totalFee)) {
+            throw new GlobalException(ResultEnum.AMOUNT_ERROR);
+        }
 
         if ("SUCCESS".equals(returnCode)) {
             //验证签名是否正确
@@ -175,6 +182,7 @@ public class PayServiceImpl implements PayService {
                         + "<return_code><![CDATA[SUCCESS]]></return_code>"
                         + "<return_msg><![CDATA[OK]]></return_msg>"
                         + "</xml>";
+                orderService.paidOrder(orderDTO);
                 return ResultUtil.success();
             } else {
                 resXml = "<xml>"
@@ -215,7 +223,7 @@ public class PayServiceImpl implements PayService {
             paramMap.put("mch_id", weChatProperties.getMchId());
             paramMap.put("nonce_str", nonceStr);
             //商家订单号
-            paramMap.put("out_trade_no", refundForm.getOrderNO());
+            paramMap.put("out_trade_no", refundForm.getOrderNO() + "");
             //订单总金额
             paramMap.put("total_fee", totalFee);
             //退款金额

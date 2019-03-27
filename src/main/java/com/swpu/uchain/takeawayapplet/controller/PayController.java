@@ -1,8 +1,10 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
+import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
 import com.swpu.uchain.takeawayapplet.form.RefundForm;
+import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -23,19 +25,27 @@ import javax.servlet.http.HttpServletResponse;
  **/
 @RestController
 @RequestMapping("/pay")
-@Api(tags = "微信支付接口文档")
+@Api(tags = "微信支付接口")
 public class PayController {
 
     @Autowired
     private PayService payService;
 
 
-    @PostMapping(value = "/creat", name = "发起预支付请求")
+    @Autowired
+    private OrderService orderService;
+
+
+    @PostMapping(value = "/creat", name = "发起预支付请求-统一下单")
     public Object creat(PayForm payForm, HttpServletRequest request) {
+        OrderDTO orderDTO = orderService.findOrder(payForm.getId());
+        if (orderDTO == null) {
+            return ResultUtil.error(ResultEnum.ORDER_NOT_FOUND);
+        }
         return payService.creat(payForm, request);
     }
 
-    @GetMapping(value = "/notify", name = "异步通知接口")
+    @GetMapping(value = "/notify", name = "异步通知接口-完成支付")
     public Object notify(HttpServletRequest request, HttpServletResponse response) {
         try {
             return payService.notify(request, response);
@@ -46,6 +56,10 @@ public class PayController {
 
     @PostMapping(value = "/refund", name = "发起退款请求")
     public Object refund(RefundForm refundForm) {
+        OrderDTO orderDTO = orderService.findOrder(refundForm.getOrderNO());
+        if (orderDTO == null) {
+            return ResultUtil.error(ResultEnum.ORDER_NOT_FOUND);
+        }
         return payService.refund(refundForm);
     }
 

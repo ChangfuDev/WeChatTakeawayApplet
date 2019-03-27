@@ -11,6 +11,8 @@ public interface UserService {
 
     boolean insert(User user);
 
+    boolean update(User user);
+
     boolean delete(Long id);
 
     User getCurrentUser();
@@ -22,4 +24,8 @@ public interface UserService {
     ResultVO deleteUser(Long id);
 
     ResultVO login(LoginForm loginForm, HttpServletResponse response);
+
+    ResultVO addRole(Long id);
+
+    ResultVO selectAll();
 }

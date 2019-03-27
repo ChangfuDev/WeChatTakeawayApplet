@@ -75,6 +75,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean update(User user) {
+        if (userMapper.updateByPrimaryKey(user) == 1) {
+            redisService.set(UserKey.userKey, user.getUsername(), user);
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
     public boolean delete(Long id) {
         redisService.delete(UserKey.userKey, id + "");
         return (userMapper.deleteByPrimaryKey(id) == 1);
@@ -146,6 +156,24 @@ public class UserServiceImpl implements UserService {
         map.put("role", user.getRole());
         map.put("token", realToken);
         return ResultUtil.success(map);
+    }
+
+    @Override
+    public ResultVO addRole(Long id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null) {
+            return ResultUtil.error(ResultEnum.USER_NOT_EXIST);
+        }
+        user.setRole(2);
+        if (update(user)) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error(ResultEnum.SERVER_ERROR);
+    }
+
+    @Override
+    public ResultVO selectAll() {
+        return ResultUtil.success(userMapper.selectAll());
     }
 
 

@@ -11,6 +11,7 @@ import com.swpu.uchain.takeawayapplet.entity.ProductInfo;
 import com.swpu.uchain.takeawayapplet.enums.OrderStatusEnum;
 import com.swpu.uchain.takeawayapplet.enums.PayStatusEnum;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.form.RefundForm;
 import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.redis.key.OrderKey;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
@@ -187,10 +188,16 @@ public class OrderServiceImpl implements OrderService {
         //修改订单状态
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         OrderMaster orderMaster = OrderMasterConversionDTOUtil.convert(orderDTO);
-        if (update(orderMaster)) {
-            return ResultUtil.success();
-        }
 
+        if (!update(orderMaster)) {
+            return ResultUtil.error(ResultEnum.SERVER_ERROR);
+        }
+        //如果支付状态为支付成功 需要退款
+        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS)) {
+            RefundForm refundForm = new RefundForm();
+            BeanUtils.copyProperties(orderDTO, refundForm);
+            payService.refund(refundForm);
+        }
         return ResultUtil.error(ResultEnum.SERVER_ERROR);
     }
 
@@ -205,7 +212,7 @@ public class OrderServiceImpl implements OrderService {
 
         //修改订单状态
         orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
-        //TODO 退款
+
         OrderMaster orderMaster = OrderMasterConversionDTOUtil.convert(orderDTO);
         if (update(orderMaster)) {
             return ResultUtil.success(orderMaster);

@@ -32,9 +32,21 @@ public class AdminController {
     }
 
     @RoleContro(role = RoleEnum.SUPER_ADMIN)
+    @GetMapping(value = "/list",name = "查询用户列表")
+    public Object selectAll(){
+        return userService.selectAll();
+    }
+
+    @RoleContro(role = RoleEnum.SUPER_ADMIN)
     @GetMapping(value = "/delete", name = "删除用户")
     public Object deleteUser(Long id) {
         return userService.deleteUser(id);
+    }
+
+    @RoleContro(role = RoleEnum.SUPER_ADMIN)
+    @PostMapping(value = "/updateRole", name = "将用户提升为管理员")
+    public Object addAdminRole(Long id) {
+        return userService.addRole(id);
     }
 
 }

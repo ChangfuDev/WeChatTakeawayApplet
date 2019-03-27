@@ -18,7 +18,7 @@ public class RefundForm {
 
     @NotNull(message = "商家订单编号不能为空")
     @ApiModelProperty("商家订单编号")
-    private String orderNO;
+    private Long orderNO;
 
     @NotNull(message = "订单金额不能为空")
     @ApiModelProperty("订单金额")
