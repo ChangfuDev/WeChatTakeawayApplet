@@ -5,6 +5,7 @@ import com.swpu.uchain.takeawayapplet.config.UrlProperties;
 import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
 import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.form.PayForm;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.PayUtil;
@@ -52,7 +53,7 @@ public class PayServiceImpl implements PayService {
      * @Param [orderDTO]
      **/
     @Override
-    public ResultVO creat(OrderDTO orderDTO, HttpServletRequest request) {
+    public ResultVO creat(PayForm payForm, HttpServletRequest request) {
         try {
             //生成随机字符串
             String nonceStr = RandomUtil.getRandomStringByLength(32);
@@ -60,9 +61,9 @@ public class PayServiceImpl implements PayService {
             String body = new String(weChatProperties.getTitle().getBytes("ISO-8859-1"), "UTF-8");
             //获得本机的ip地址
             String spbillCreatIp = PayUtil.getIpAddr(request);
-            String ordNo = orderDTO.getId() + "";
+            String ordNo = payForm.getId() + "";
             //支付金额  单位：分  转为元
-            String totalFee = orderDTO.getOrderAmount().multiply(new BigDecimal(100)) + "";
+            String totalFee = payForm.getOrderAmount().multiply(new BigDecimal(100)) + "";
 
             //生成预支付订单
             Map<String, String> packageParams = new HashMap<String, String>();
@@ -75,14 +76,14 @@ public class PayServiceImpl implements PayService {
             packageParams.put("spbill_create_ip", spbillCreatIp);
             packageParams.put("notify_url", weChatProperties.getNotifyUrl());
             packageParams.put("trade_type", weChatProperties.getTradeType());
-            packageParams.put("open_id", orderDTO.getOpenId());
+            packageParams.put("open_id", payForm.getOpenId());
 
             //除去数组中的空值和签名参数
             packageParams = PayUtil.paraFileter(packageParams);
-            String prestr = PayUtil.createLinkString(packageParams);
+            String preStr = PayUtil.createLinkString(packageParams);
 
             //MD5运算生成签名，第一次签名 调用统一下单接口
-            String mysign = PayUtil.sign(prestr, weChatProperties.getMchKey(), "utf-8").toUpperCase();
+            String mysign = PayUtil.sign(preStr, weChatProperties.getMchKey(), "utf-8").toUpperCase();
             log.info("====================第一次签名" + mysign + "====================");
 
             //连同生成的签名一起拼接成xml数据
@@ -91,7 +92,7 @@ public class PayServiceImpl implements PayService {
                     + "<body><![CDATA]" + body + "]]></body>"
                     + "<mch_id>" + weChatProperties.getMchId() + "</mch_id>"
                     + "<nonce_str>" + nonceStr + "</nonce_str>"
-                    + "<openid>" + orderDTO.getOpenId() + "</openid>"
+                    + "<openid>" + payForm.getOpenId() + "</openid>"
                     + "<out_trade_no>" + ordNo + "<out_trade_no>"
                     + "<spbill_create_ip>" + spbillCreatIp + "</spbill_create_ip>"
                     + "<total_fee>" + totalFee + "</total_fee>"
@@ -147,7 +148,7 @@ public class PayServiceImpl implements PayService {
      * @Param [notifyData]
      **/
     @Override
-    public ResultVO notify(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResultVO notify( HttpServletRequest request, HttpServletResponse response) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream()));
         String line = null;
         StringBuffer sb = new StringBuffer();
@@ -164,15 +165,6 @@ public class PayServiceImpl implements PayService {
         String returnCode = (String) map.get("return_code");
         String totalFee = (String) map.get("total_fee");
 
-        OrderDTO orderDTO = orderService.findOrder(orderId);
-        if (orderDTO == null) {
-            log.info("订单不存在");
-            return ResultUtil.error(ResultEnum.ORDER_NOT_FOUND);
-        }
-        //匹配定单金额是否匹配
-        if (!(orderDTO.getOrderAmount() + "").equals(totalFee)) {
-            return ResultUtil.error(ResultEnum.AMOUNT_ERROR);
-        }
 
         if ("SUCCESS".equals(returnCode)) {
             //验证签名是否正确

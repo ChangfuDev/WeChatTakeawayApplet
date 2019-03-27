@@ -1,7 +1,7 @@
 package com.swpu.uchain.takeawayapplet.controller;
 
-import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
+import com.swpu.uchain.takeawayapplet.form.PayForm;
 import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -29,14 +29,14 @@ public class PayController {
 
 
     @GetMapping(value = "/creat", name = "发起预支付请求")
-    public Object creat(OrderDTO orderDTO, HttpServletRequest request) {
-        return payService.creat(orderDTO, request);
+    public Object creat(PayForm payForm, HttpServletRequest request) {
+        return payService.creat(payForm, request);
     }
 
     @GetMapping(value = "/notify", name = "异步通知接口")
-    public Object notify(Long orderId, HttpServletRequest request, HttpServletResponse response) {
+    public Object notify(HttpServletRequest request, HttpServletResponse response) {
         try {
-            return payService.notify(orderId, request, response);
+            return payService.notify(request, response);
         } catch (Exception e) {
             return ResultUtil.error(ResultEnum.PAY_FILE);
         }
