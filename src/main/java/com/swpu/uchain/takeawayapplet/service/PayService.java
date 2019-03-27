@@ -1,8 +1,8 @@
 package com.swpu.uchain.takeawayapplet.service;
 
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
-import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
+import com.swpu.uchain.takeawayapplet.form.RefundForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +14,6 @@ public interface PayService {
 
     ResultVO notify(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception;
 
-    void refund(OrderDTO orderDTO);
+    ResultVO refund(RefundForm refundForm);
 
 }

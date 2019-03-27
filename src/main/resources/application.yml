@@ -65,6 +65,9 @@ projectUrl:
   weChatMaAuthorize: https://wechatapptest.natapp1.cc
   weChatOpenAuthorize: https://wechatapptest.natapp1.cc
   pay_url: "https://api.mch.weixin.qq.com/pay/unifiedorder"
+  refund_url: "https://api.mch.weixin.qq.com/secapi/pay/refund"
+
+
 
 
 jwt:

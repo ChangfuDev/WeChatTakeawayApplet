@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UrlProperties {
 
-    public  String payUrl ;
+    public String payUrl;
+
+    public String refundUrl;
 
 }

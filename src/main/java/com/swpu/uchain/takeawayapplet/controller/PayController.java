@@ -2,11 +2,13 @@ package com.swpu.uchain.takeawayapplet.controller;
 
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
+import com.swpu.uchain.takeawayapplet.form.RefundForm;
 import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +30,7 @@ public class PayController {
     private PayService payService;
 
 
-    @GetMapping(value = "/creat", name = "发起预支付请求")
+    @PostMapping(value = "/creat", name = "发起预支付请求")
     public Object creat(PayForm payForm, HttpServletRequest request) {
         return payService.creat(payForm, request);
     }
@@ -41,4 +43,11 @@ public class PayController {
             return ResultUtil.error(ResultEnum.PAY_FILE);
         }
     }
+
+    @PostMapping(value = "/refund", name = "发起退款请求")
+    public Object refund(RefundForm refundForm) {
+        return payService.refund(refundForm);
+    }
+
+
 }

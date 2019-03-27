@@ -3,9 +3,9 @@ package com.swpu.uchain.takeawayapplet.service.impl;
 import com.swpu.uchain.takeawayapplet.VO.ResultVO;
 import com.swpu.uchain.takeawayapplet.config.UrlProperties;
 import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
-import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
+import com.swpu.uchain.takeawayapplet.form.RefundForm;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.PayUtil;
@@ -83,8 +83,8 @@ public class PayServiceImpl implements PayService {
             String preStr = PayUtil.createLinkString(packageParams);
 
             //MD5运算生成签名，第一次签名 调用统一下单接口
-            String mysign = PayUtil.sign(preStr, weChatProperties.getMchKey(), "utf-8").toUpperCase();
-            log.info("====================第一次签名" + mysign + "====================");
+            String mySign = PayUtil.sign(preStr, weChatProperties.getMchKey(), "utf-8").toUpperCase();
+            log.info("====================第一次签名" + mySign + "====================");
 
             //连同生成的签名一起拼接成xml数据
             String xml = "</xml version='1.0' encoding='gdk'>"
@@ -97,7 +97,7 @@ public class PayServiceImpl implements PayService {
                     + "<spbill_create_ip>" + spbillCreatIp + "</spbill_create_ip>"
                     + "<total_fee>" + totalFee + "</total_fee>"
                     + "<trade_type>" + weChatProperties.getTradeType() + "</trade_type>"
-                    + "<sign>" + mysign + "</sign>"
+                    + "<sign>" + mySign + "</sign>"
                     + "</xml>";
 
             log.info("====================调试请求XML数据====================");
@@ -116,7 +116,7 @@ public class PayServiceImpl implements PayService {
             //返回移动端需要的参数
             Map<String, Object> response = new HashMap<String, Object>();
             //return_code 为成功　　return_msg 为失败
-            if (return_code == "SUCCESS" || return_code.equals(return_code)) {
+            if ("SUCCESS".equals(return_code)) {
                 //业务结果
                 String prepay_id = (String) map.get("prepay_id");
                 response.put("nonceStr", nonceStr);
@@ -148,7 +148,7 @@ public class PayServiceImpl implements PayService {
      * @Param [notifyData]
      **/
     @Override
-    public ResultVO notify( HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResultVO notify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream()));
         String line = null;
         StringBuffer sb = new StringBuffer();
@@ -202,7 +202,82 @@ public class PayServiceImpl implements PayService {
      * @Param [orderDTO]
      **/
     @Override
-    public void refund(OrderDTO orderDTO) {
+    public ResultVO refund(RefundForm refundForm) {
+        try {
+            String nonceStr = RandomUtil.getRandomStringByLength(32);
+
+            String totalFee = refundForm.getTotalFee().multiply(new BigDecimal(100)) + "";
+            String refundFee = refundForm.getRefundFee().multiply(new BigDecimal(100)) + "";
+
+            Map<String, String> paramMap = new HashMap<String, String>();
+
+            paramMap.put("appid", weChatProperties.getAppid());
+            paramMap.put("mch_id", weChatProperties.getMchId());
+            paramMap.put("nonce_str", nonceStr);
+            //商家订单号
+            paramMap.put("out_trade_no", refundForm.getOrderNO());
+            //订单总金额
+            paramMap.put("total_fee", totalFee);
+            //退款金额
+            paramMap.put("refund_fee", refundFee);
+            //退款原因
+            paramMap.put("refund_desc", refundForm.getRefundDesc());
+
+            paramMap = PayUtil.paraFileter(paramMap);
+            String preStr = PayUtil.createLinkString(paramMap);
+
+
+            String mySign = PayUtil.sign(preStr, weChatProperties.getMchKey(), "utf-8").toUpperCase();
+            log.info("====================第一次签名" + mySign + "====================");
+
+            //组装xml
+            String xml = "<xml>"
+                    + "<appid>" + weChatProperties.getAppid() + "</appid>"
+                    + "<mch_id>" + weChatProperties.getMchId() + "</mch_id>"
+                    + "<nonce_str>" + nonceStr + "</nonce_str>"
+                    + "<out_trade_no>" + refundForm.getOrderNO() + "</out_trade_no>"
+                    + "<refund_fee>" + refundFee + "</refund_fee>"
+                    + "<total_fee>" + totalFee + "</total_fee>"
+                    + "<refund_desc>" + refundForm.getRefundDesc() + "</refund_desc>"
+                    + "<sign>" + mySign + "</sign>"
+                    + "</xml>";
+            log.info("====================调试请求XML数据====================");
+            System.out.println(xml);
+
+            //调用退款接口
+            String result = PayUtil.httpRequest(urlProperties.getRefundUrl(), "POST", xml);
+
+            log.info("====================调试返回XML数据====================");
+            System.out.println(result);
+
+            Map map = PayUtil.doXMLParse(result);
+            String return_code = (String) map.get("return_code");
+            Map<String, Object> response = new HashMap<String, Object>();
+            //return_code 为成功　　return_msg 为失败
+            if ("SUCCESS".equals(return_code)) {
+                //业务结果
+                String prepay_id = (String) map.get("prepay_id");
+                response.put("nonceStr", nonceStr);
+                response.put("package", "prepay_id" + prepay_id);
+                Long timeStamp = System.currentTimeMillis() / 1000;
+                //时间 类型转换为微信官方要求的String
+                response.put("time_stamp", timeStamp + "");
+
+                String stringSignTemp = "appId=" + weChatProperties.getAppid() + "&nonceStr=" + nonceStr
+                        + "&package=prepay_id" + prepay_id + "&signType=MD5" + "&timeStamp=" + timeStamp;
+                //再次签名 用于小程序端调用wx.requestPayment方法
+                String paySign = PayUtil.sign(stringSignTemp, weChatProperties.getMchKey(), "utf-8").toUpperCase();
+                log.info("===================第二次签名：" + paySign + "====================");
+
+                response.put("paySign", paySign);
+            }
+            response.put("appid", weChatProperties.getAppid());
+            return ResultUtil.success(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 }
