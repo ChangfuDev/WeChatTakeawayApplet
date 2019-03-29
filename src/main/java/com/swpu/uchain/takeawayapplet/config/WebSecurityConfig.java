@@ -90,6 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/buyer/**").permitAll()
                 .antMatchers("/wechat/user/**", "/pay/**").permitAll()
+                .antMatchers("/home/hobo/testFile/**").permitAll()
                 .anyRequest().authenticated();
 
         //配置自己的验证过滤器

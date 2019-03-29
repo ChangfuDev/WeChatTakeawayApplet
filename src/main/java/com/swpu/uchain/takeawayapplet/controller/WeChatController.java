@@ -64,19 +64,5 @@ public class WeChatController {
         return ResultUtil.error(ResultEnum.DECRYPTION_FAILURE);
     }
 
-    /**
-     * @return void
-     * @Author hobo
-     * @Description : 可用于获取小程序的 token
-     * @Param
-     **/
-    @GetMapping("/token")
-    public void getAccessToken() {
-        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + weChatProperties.getAppid() + "&secret=" + weChatProperties.getSecret();
-        RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.getForObject(url, String.class);
-        System.out.println(response);
-        log.info("response={}", response);
-    }
 
 }

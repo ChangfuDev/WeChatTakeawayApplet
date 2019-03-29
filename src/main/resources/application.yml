@@ -60,6 +60,9 @@ wechat:
   title: "xx外卖"
   trade_type: "JSAPI"
 
+template:
+  paid_success: "E6ZqYI9cNBsOKV2KkQlrgLA0FQJ4aGZ4CpH2a8UPylI"
+
 #外网地址
 projectUrl:
   weChatMaAuthorize: https://wechatapptest.natapp1.cc
@@ -75,5 +78,7 @@ jwt:
   expiration: 1296000
   tokenStart: "Bearer "
   tokenName: Authorization
+
+
 
 

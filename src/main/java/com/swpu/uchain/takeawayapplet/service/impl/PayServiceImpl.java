@@ -8,6 +8,7 @@ import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.exception.GlobalException;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
 import com.swpu.uchain.takeawayapplet.form.RefundForm;
+//import com.swpu.uchain.takeawayapplet.service.MessageService;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.service.PayService;
 import com.swpu.uchain.takeawayapplet.util.PayUtil;
@@ -46,6 +47,9 @@ public class PayServiceImpl implements PayService {
 
     @Autowired
     private OrderService orderService;
+
+//    @Autowired
+//    private MessageService messageService;
 
 
     /**
@@ -167,8 +171,11 @@ public class PayServiceImpl implements PayService {
         String returnCode = (String) map.get("return_code");
         String outTradeNo = (String) map.get("out_trade_no");
         String totalFee = (String) map.get("total_fee");
+
+
         Long orderId = Long.parseLong(outTradeNo);
         OrderDTO orderDTO = orderService.findOrder(orderId);
+
         if (!(orderDTO.getOrderAmount() + "").equals(totalFee)) {
             throw new GlobalException(ResultEnum.AMOUNT_ERROR);
         }
@@ -176,6 +183,7 @@ public class PayServiceImpl implements PayService {
         if ("SUCCESS".equals(returnCode)) {
             //验证签名是否正确
             if (PayUtil.verify(PayUtil.createLinkString(map), (String) map.get("sign"), weChatProperties.getMchKey(), "utf-8")) {
+                String prepay_id = (String) map.get("prepay_id");
 
                 //通知微信服务器已经支付成功
                 resXml = "<xml>"
@@ -183,6 +191,7 @@ public class PayServiceImpl implements PayService {
                         + "<return_msg><![CDATA[OK]]></return_msg>"
                         + "</xml>";
                 orderService.paidOrder(orderDTO);
+//                messageService.pushToBuyerPaidMsg(orderDTO.getOpenId(), prepay_id, orderDTO.getId() + "", totalFee);
                 return ResultUtil.success();
             } else {
                 resXml = "<xml>"
@@ -192,7 +201,6 @@ public class PayServiceImpl implements PayService {
             }
             System.out.println(resXml);
             log.info("微信支付回调数据结束");
-
             BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
             out.write(resXml.getBytes());
             out.flush();

@@ -15,7 +15,7 @@ public class TimeUtil {
      *
      * @return
      */
-    public String getNowTime() {
+    public static String getNowTime() {
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
@@ -26,7 +26,7 @@ public class TimeUtil {
      *
      * @return
      */
-    public String getTimeCN() {
+    public static String getTimeCN() {
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
         return format.format(date);
