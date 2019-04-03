@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.swpu.uchain.takeawayapplet.VO.WeChatVO;
 import com.swpu.uchain.takeawayapplet.config.WeChatProperties;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
-import com.swpu.uchain.takeawayapplet.util.AesCbcUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,15 +52,18 @@ public class WeChatController {
         String response = restTemplate.getForObject(url, String.class);
         WeChatVO weChatVO = JSONObject.parseObject(response, WeChatVO.class);
         String openId = weChatVO.getOpenId();
-        String sessionKey = weChatVO.getSessionKey();
+        //获得用户Sessionkey
+        //        String sessionKey = weChatVO.getSessionKey();
 
+        return openId;
 
-        String result = AesCbcUtil.decrypt(encryptedData, sessionKey, iv, "UTF-8");
-        if (null != result && result.length() > 0) {
-            return ResultUtil.success(result);
-
-        }
-        return ResultUtil.error(ResultEnum.DECRYPTION_FAILURE);
+        //解密信息
+//        String result = AesCbcUtil.decrypt(encryptedData, sessionKey, iv, "UTF-8");
+//        if (null != result && result.length() > 0) {
+//            return ResultUtil.success();
+//
+//        }
+//        return ResultUtil.error(ResultEnum.DECRYPTION_FAILURE);
     }
 
 

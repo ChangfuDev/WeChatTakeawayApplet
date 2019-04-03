@@ -4,6 +4,7 @@ import com.swpu.uchain.takeawayapplet.dto.OrderDTO;
 import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.form.OrderForm;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
+import com.swpu.uchain.takeawayapplet.util.GetOpenIdUtil;
 import com.swpu.uchain.takeawayapplet.util.OrderFormConversionDTOUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -32,7 +33,9 @@ public class BuyerOrderController {
 
     @ApiOperation("创建订单接口")
     @PostMapping(value = "/creat", name = "创建订单")
-    public Object creatOrder(OrderForm orderForm) {
+    public Object creatOrder(String code, OrderForm orderForm) {
+        orderForm.setOpenId(GetOpenIdUtil.getOpenId(code));
+
         OrderDTO orderDTO = OrderFormConversionDTOUtil.convert(orderForm);
         if (CollectionUtils.isEmpty(orderDTO.getOrderDetails())) {
             return ResultUtil.error(ResultEnum.ITEMS_EMPTY);
@@ -43,14 +46,14 @@ public class BuyerOrderController {
 
     @ApiOperation("获取用户的订单信息")
     @GetMapping(value = "/getList", name = "获取用户的订单信息")
-    public Object getOrderListByOpenId(String openId) {
-        return orderService.findListByOpenId(openId);
+    public Object getOrderListByOpenId(String code) {
+        return orderService.findListByOpenId(code);
     }
 
 
     @ApiOperation("获取订单详情")
     @GetMapping(value = "/getDetail", name = "获取订单详情信息")
-    public Object getOrderDetail(String openId, Long orderId) {
+    public Object getOrderDetail(Long orderId) {
         OrderDTO orderDTO = orderService.findOrder(orderId);
 
         return ResultUtil.success(orderDTO);
@@ -58,7 +61,7 @@ public class BuyerOrderController {
 
     @ApiOperation("取消订单")
     @PostMapping(value = "/cancel", name = "取消订单")
-    public Object cancel(String openId, Long orderId) {
+    public Object cancel(Long orderId) {
 
         OrderDTO orderDTO = orderService.findOrder(orderId);
         return orderService.cancelOrder(orderDTO);

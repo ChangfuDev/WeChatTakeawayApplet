@@ -27,8 +27,7 @@ public class OrderForm {
     @ApiModelProperty("客户地址")
     private String userAddress;
 
-    @NotNull(message = "openId必填")
-    @ApiModelProperty("微信openId")
+    @ApiModelProperty("微信openId,由code带入")
     private String openId;
 
     @NotNull(message = "购物车不能为空")

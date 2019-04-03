@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public interface PayService {
 
-    ResultVO creat(PayForm payForm, HttpServletRequest request);
+    ResultVO creat(PayForm payForm, String code,HttpServletRequest request);
 
     ResultVO notify(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception;
 

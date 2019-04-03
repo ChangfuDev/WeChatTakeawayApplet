@@ -8,9 +8,10 @@ import com.swpu.uchain.takeawayapplet.enums.ResultEnum;
 import com.swpu.uchain.takeawayapplet.exception.GlobalException;
 import com.swpu.uchain.takeawayapplet.form.PayForm;
 import com.swpu.uchain.takeawayapplet.form.RefundForm;
-//import com.swpu.uchain.takeawayapplet.service.MessageService;
+import com.swpu.uchain.takeawayapplet.service.MessageService;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.service.PayService;
+import com.swpu.uchain.takeawayapplet.util.GetOpenIdUtil;
 import com.swpu.uchain.takeawayapplet.util.PayUtil;
 import com.swpu.uchain.takeawayapplet.util.RandomUtil;
 import com.swpu.uchain.takeawayapplet.util.ResultUtil;
@@ -27,6 +28,8 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+
+//import com.swpu.uchain.takeawayapplet.service.MessageService;
 
 /**
  * @ClassName PayServiceImpl
@@ -48,8 +51,8 @@ public class PayServiceImpl implements PayService {
     @Autowired
     private OrderService orderService;
 
-//    @Autowired
-//    private MessageService messageService;
+    @Autowired
+    private MessageService messageService;
 
 
     /**
@@ -59,7 +62,7 @@ public class PayServiceImpl implements PayService {
      * @Param [orderDTO]
      **/
     @Override
-    public ResultVO creat(PayForm payForm, HttpServletRequest request) {
+    public ResultVO creat(PayForm payForm, String code, HttpServletRequest request) {
         try {
             //生成随机字符串
             String nonceStr = RandomUtil.getRandomStringByLength(32);
@@ -70,7 +73,7 @@ public class PayServiceImpl implements PayService {
             String ordNo = payForm.getId() + "";
             //支付金额  单位：分  转为元
             String totalFee = payForm.getOrderAmount().multiply(new BigDecimal(100)) + "";
-
+            String openId = GetOpenIdUtil.getOpenId(code);
             //生成预支付订单
             Map<String, String> packageParams = new HashMap<String, String>();
             packageParams.put("appid", weChatProperties.getAppid());
@@ -82,7 +85,7 @@ public class PayServiceImpl implements PayService {
             packageParams.put("spbill_create_ip", spbillCreatIp);
             packageParams.put("notify_url", weChatProperties.getNotifyUrl());
             packageParams.put("trade_type", weChatProperties.getTradeType());
-            packageParams.put("open_id", payForm.getOpenId());
+            packageParams.put("open_id", openId);
 
             //除去数组中的空值和签名参数
             packageParams = PayUtil.paraFileter(packageParams);
@@ -98,7 +101,7 @@ public class PayServiceImpl implements PayService {
                     + "<body><![CDATA]" + body + "]]></body>"
                     + "<mch_id>" + weChatProperties.getMchId() + "</mch_id>"
                     + "<nonce_str>" + nonceStr + "</nonce_str>"
-                    + "<openid>" + payForm.getOpenId() + "</openid>"
+                    + "<openid>" + openId + "</openid>"
                     + "<out_trade_no>" + ordNo + "<out_trade_no>"
                     + "<spbill_create_ip>" + spbillCreatIp + "</spbill_create_ip>"
                     + "<total_fee>" + totalFee + "</total_fee>"
@@ -191,7 +194,7 @@ public class PayServiceImpl implements PayService {
                         + "<return_msg><![CDATA[OK]]></return_msg>"
                         + "</xml>";
                 orderService.paidOrder(orderDTO);
-//                messageService.pushToBuyerPaidMsg(orderDTO.getOpenId(), prepay_id, orderDTO.getId() + "", totalFee);
+                messageService.pushToBuyerPaidMsg(orderDTO.getOpenId(), prepay_id, orderDTO.getId() + "", totalFee);
                 return ResultUtil.success();
             } else {
                 resXml = "<xml>"

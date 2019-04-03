@@ -19,10 +19,6 @@ public class PayForm {
     @ApiModelProperty("商家订单号")
     private Long id;
 
-    @NotNull(message = "微信用户openId不能为空")
-    @ApiModelProperty("微信用户openId")
-    private String openId;
-
     @NotNull(message = "下单用户名不能为空")
     @ApiModelProperty("下单用户名")
     private String username;

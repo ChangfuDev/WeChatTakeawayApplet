@@ -16,10 +16,7 @@ import com.swpu.uchain.takeawayapplet.redis.RedisService;
 import com.swpu.uchain.takeawayapplet.redis.key.OrderKey;
 import com.swpu.uchain.takeawayapplet.service.OrderService;
 import com.swpu.uchain.takeawayapplet.service.PayService;
-import com.swpu.uchain.takeawayapplet.util.OrderMasterConversionDTOUtil;
-import com.swpu.uchain.takeawayapplet.util.RandomUtil;
-import com.swpu.uchain.takeawayapplet.util.ResultUtil;
-import com.swpu.uchain.takeawayapplet.util.TimeUtil;
+import com.swpu.uchain.takeawayapplet.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +118,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResultVO findListByOpenId(String openId) {
+    public ResultVO findListByOpenId(String code) {
+        String openId = GetOpenIdUtil.getOpenId(code);
         List<OrderMaster> orderMasters = redisService.getArraylist(OrderKey.orderKerByOpenId, openId, OrderMaster.class);
         if (orderMasters == null || orderMasters.size() == 0) {
             orderMasters = orderMasterMapper.findListByOpenId(openId);
