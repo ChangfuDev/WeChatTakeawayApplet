@@ -1,4 +1,4 @@
-package com.swpu.uchain.takeawayapplet.util;
+package com.swpu.uchain.takeawayapplet.util.wechatUtil;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;

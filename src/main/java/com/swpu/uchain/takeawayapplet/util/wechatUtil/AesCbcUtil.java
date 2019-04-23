@@ -1,4 +1,4 @@
-package com.swpu.uchain.takeawayapplet.util;
+package com.swpu.uchain.takeawayapplet.util.wechatUtil;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;

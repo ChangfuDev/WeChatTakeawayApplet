@@ -1,4 +1,4 @@
-package com.swpu.uchain.takeawayapplet.util;
+package com.swpu.uchain.takeawayapplet.util.wechatUtil;
 
 import com.alibaba.fastjson.JSONObject;
 import com.swpu.uchain.takeawayapplet.VO.AccessTokenVO;
